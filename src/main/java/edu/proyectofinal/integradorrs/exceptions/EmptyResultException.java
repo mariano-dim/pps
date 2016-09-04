@@ -1,7 +1,5 @@
 package edu.proyectofinal.integradorrs.exceptions;
 
-import edu.proyectofinal.integradorrs.model.AbstractModel;
-
 /**
  * Created by mariano on 25/03/16.
  */

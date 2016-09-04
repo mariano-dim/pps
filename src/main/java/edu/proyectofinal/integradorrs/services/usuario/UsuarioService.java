@@ -3,7 +3,6 @@ package edu.proyectofinal.integradorrs.services.usuario;
 import java.util.Collection;
 
 import edu.proyectofinal.integradorrs.model.Usuario;
-import java.util.List;
 
 public interface UsuarioService {
 

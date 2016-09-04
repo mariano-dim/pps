@@ -1,6 +1,5 @@
 package edu.proyectofinal.integradorrs.controllers;
 
-import edu.proyectofinal.integradorrs.model.AbstractModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,11 +37,6 @@ public class AbstractController<T > {
     protected ResponseEntity<T> createdErrorResult(T result) {
         HttpHeaders httpHeaders = buildHeaders();
         return new ResponseEntity<>(result, httpHeaders, HttpStatus.BAD_REQUEST);
-    }
-    
-        protected ResponseEntity<T> createdErrorResultNotFoud() {
-        HttpHeaders httpHeaders = buildHeaders();
-        return new ResponseEntity<>(httpHeaders, HttpStatus.NOT_FOUND);
     }
 
     protected ResponseEntity<T> singleResult(T result) {

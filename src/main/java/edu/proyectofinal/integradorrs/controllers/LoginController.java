@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
