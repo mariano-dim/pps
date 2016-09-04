@@ -7,7 +7,7 @@ import edu.proyectofinal.integradorrs.model.AbstractModel;
  */
 public class EmptyResultException extends AbstractApiRestException {
 
-    public EmptyResultException(Class<? extends AbstractModel> clazz){
+    public EmptyResultException(Class<?> clazz){
         super("Reource not found: " + clazz.getName());
     }
 }

@@ -8,30 +8,37 @@ import org.springframework.stereotype.Service;
 import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.repositorys.UsuarioRepository;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import java.util.Date;
 
-@Service("UsuarioServiceMongo")
-public class UsuarioServiceMongo implements UsuarioService{
-	
-	
+@Service("UsuarioService")
+public class UsuarioServiceImpl implements UsuarioService {
+
     @Autowired
     private UsuarioRepository repository;
-    
-    public Collection<Usuario> getAll(){
-        Collection<Usuario> result = repository.findAll();
+
+    @Override
+    public Collection<Usuario> getAll() {
+        Collection<Usuario> result = (Collection<Usuario>) repository.findAll();
         return result;
     }
+
     @Override
     public Usuario getById(String id) {
         return repository.findOne(id);
     }
-    
+
     @Override
-    public Usuario getByUsuario(String usuario) {
-        return repository.findOne(usuario);
+    public Usuario getByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
-    public Usuario save(Usuario t){
-        return repository.insert(t);
+    @Override
+    public Usuario save(Usuario usuario) {
+
+        usuario.setCreationDate(new Date());
+        repository.save(usuario);
+        return usuario;
     }
 
 }
+

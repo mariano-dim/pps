@@ -12,8 +12,9 @@ import java.util.Collection;
 
 /**
  * Created by mariano on 25/03/16.
+ * @param <T>
  */
-public class AbstractController<T extends AbstractModel> {
+public class AbstractController<T > {
 
     private static final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -23,7 +24,7 @@ public class AbstractController<T extends AbstractModel> {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(result.getId()).toUri());
+                .buildAndExpand(result.getClass()).toUri());
 
         httpHeaders.setContentType(contentType);
         return new ResponseEntity<>(result, httpHeaders, HttpStatus.CREATED);
@@ -32,6 +33,16 @@ public class AbstractController<T extends AbstractModel> {
     protected ResponseEntity<Collection<T>> collectionResult(Collection<T> result) {
         HttpHeaders httpHeaders = buildHeaders();
         return new ResponseEntity<>(result, httpHeaders, HttpStatus.OK);
+    }
+
+    protected ResponseEntity<T> createdErrorResult(T result) {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<>(result, httpHeaders, HttpStatus.BAD_REQUEST);
+    }
+    
+        protected ResponseEntity<T> createdErrorResultNotFoud() {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<>(httpHeaders, HttpStatus.NOT_FOUND);
     }
 
     protected ResponseEntity<T> singleResult(T result) {
@@ -49,3 +60,4 @@ public class AbstractController<T extends AbstractModel> {
     }
 
 }
+
