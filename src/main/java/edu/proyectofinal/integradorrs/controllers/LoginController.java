@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -20,6 +21,20 @@ public class LoginController extends AbstractController<Usuario> {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @RequestMapping(method = RequestMethod.GET, value="/")
+    public ResponseEntity<Collection<Usuario>> getAll() {
+
+        System.out.println("getAll");
+
+        Collection<Usuario> usuarios = usuarioService.getAllUsuarios();
+
+        if (null == usuarios ) {
+            throw new EmptyResultException(Usuario.class);
+        }
+        return super.collectionResult(usuarios);
+
+    }
 
     // fix http://stackoverflow.com/questions/3526523/spring-mvc-pathvariable-getting-truncated
     @RequestMapping(method = RequestMethod.GET, value = "/email/{email:.+}")
@@ -30,7 +45,7 @@ public class LoginController extends AbstractController<Usuario> {
 
         Usuario usuario = usuarioService.getByEmail(email);
 
-        if (null == usuario){
+        if (null == usuario) {
             throw new EmptyResultException(Usuario.class);
         }
         return super.singleResult(usuario);
@@ -44,7 +59,7 @@ public class LoginController extends AbstractController<Usuario> {
         System.out.println("Id: " + id);
 
         Usuario usuario = usuarioService.getById(id);
-        if (null == usuario){
+        if (null == usuario) {
             throw new EmptyResultException(Usuario.class);
         }
         return super.singleResult(usuario);
@@ -59,5 +74,3 @@ public class LoginController extends AbstractController<Usuario> {
 
     }
 }
-
-

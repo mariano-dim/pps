@@ -6,7 +6,7 @@ import edu.proyectofinal.integradorrs.model.Usuario;
 
 public interface UsuarioService {
 
-	Collection<Usuario> getAll();
+	Collection<Usuario> getAllUsuarios();
 	
 	Usuario getByEmail(String email);
 	
