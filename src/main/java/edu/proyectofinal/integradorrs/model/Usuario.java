@@ -136,5 +136,19 @@ public class Usuario {
 //    public boolean isAnErrorResponse() {
 //        return false;
 //    }
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append(" id:- ").append(this.getId());
+        str.append(" email:- ").append(this.getEmail());
+        str.append(" creationDate:- ").append(this.getCreationDate());
+        str.append(" telefono:- ").append(this.getTelefono() );
+        str.append(" fechaNacimiento:- ").append( this.getFechaNacimiento());
+        str.append(" pais:- ").append(this.getPais());
+        str.append(" provincia:- ").append(this.getProvincia());
+        str.append(" ciudad:- ").append(this.getCiudad());
+        str.append(" calle:- ").append(this.getCalle());
 
+         return str.toString();
+    }
 }

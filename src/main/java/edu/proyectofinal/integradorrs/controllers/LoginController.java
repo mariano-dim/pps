@@ -29,9 +29,6 @@ public class LoginController extends AbstractController<Usuario> {
 
         Collection<Usuario> usuarios = usuarioService.getAllUsuarios();
 
-        if (null == usuarios ) {
-            throw new EmptyResultException(Usuario.class);
-        }
         return super.collectionResult(usuarios);
 
     }
