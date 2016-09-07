@@ -9,6 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "usuarios", path = "usuarios")
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
+    
     /**
      *
      * @param email
