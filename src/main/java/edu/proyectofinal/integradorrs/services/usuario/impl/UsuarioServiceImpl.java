@@ -10,7 +10,7 @@ import edu.proyectofinal.integradorrs.repositorys.UsuarioRepository;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
 import java.util.Date;
 
-@Service("UsuarioService")
+@Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
