@@ -5,8 +5,8 @@
  */
 package edu.proyectofinal.integradorrs.services.tweets;
 
-import edu.proyectofinal.integradorrs.model.TweetsModel;
 import java.util.Collection;
+import twitter4j.Status;
 
 /**
  *
@@ -14,6 +14,8 @@ import java.util.Collection;
  */
 public interface TweetsService {
     
-    	Collection<TweetsModel> getAllTweets();
+    	Collection<Status> getAllTweets(String email);
+
+        Collection<Status> getUserTimeline(String user, String email);
     
 }

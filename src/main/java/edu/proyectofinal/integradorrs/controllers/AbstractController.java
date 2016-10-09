@@ -1,5 +1,6 @@
 package edu.proyectofinal.integradorrs.controllers;
 
+import edu.proyectofinal.integradorrs.model.Token;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +16,7 @@ import java.util.Collection;
  */
 public class AbstractController<T > {
 
-    private static final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+    static final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
 
@@ -52,6 +53,10 @@ public class AbstractController<T > {
         httpHeaders.setContentType(contentType);
         return httpHeaders;
     }
+
+    protected ResponseEntity<Token> singleResult(Token token) {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<Token>(token, httpHeaders, HttpStatus.OK);    }
 
 }
 
