@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
-import static sun.rmi.transport.TransportConstants.Return;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
@@ -57,7 +56,7 @@ public class TwitterCredentials {
    public Token GetToken(String email)
    {
       RestTemplate restTemplate = new RestTemplate();
-      Token atoken = restTemplate.getForObject("http://localhost:8080/api/usuario/token/twitter/email/emii.corsaro@gmail.com?socialnetwork=Twitter",Token.class);
+      Token atoken = restTemplate.getForObject("http://localhost:8080/api/usuario/token/twitter/email/"+email+"?socialnetwork=Twitter",Token.class);
       return atoken;
    }
 }
