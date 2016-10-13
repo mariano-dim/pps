@@ -7,10 +7,10 @@ package edu.proyectofinal.integradorrs.model;
 
 
 import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.index.Indexed;
 /**
  *
  * @author MarianoAndres

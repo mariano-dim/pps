@@ -1,8 +1,8 @@
 package edu.proyectofinal.integradorrs.services.usuario;
 
-import edu.proyectofinal.integradorrs.model.Token;
 import java.util.Collection;
 
+import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.Usuario;
 
 public interface UsuarioService {

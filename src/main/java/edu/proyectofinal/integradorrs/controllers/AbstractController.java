@@ -1,14 +1,15 @@
 package edu.proyectofinal.integradorrs.controllers;
 
-import edu.proyectofinal.integradorrs.model.Token;
+import java.nio.charset.Charset;
+import java.util.Collection;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.nio.charset.Charset;
-import java.util.Collection;
+import edu.proyectofinal.integradorrs.model.Token;
 
 /**
  * Created by mariano on 25/03/16.

@@ -1,17 +1,17 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.proyectofinal.integradorrs.model.TweetsModel;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
-import java.util.Collection;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import twitter4j.Status;
 
 /**

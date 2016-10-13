@@ -1,10 +1,11 @@
 package edu.proyectofinal.integradorrs.model;
 
 import java.util.Date;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 @Document(collection = "usuarios")
 public class Usuario {

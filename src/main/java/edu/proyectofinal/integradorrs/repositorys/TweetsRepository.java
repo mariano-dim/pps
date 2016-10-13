@@ -5,11 +5,10 @@
  */
 package edu.proyectofinal.integradorrs.repositorys;
 
-import edu.proyectofinal.integradorrs.model.TweetsModel;
-import edu.proyectofinal.integradorrs.model.Usuario;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import edu.proyectofinal.integradorrs.model.TweetsModel;
 
 /**
  *

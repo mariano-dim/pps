@@ -1,10 +1,11 @@
 package edu.proyectofinal.integradorrs;
 
-import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
 
 /**
  * Created by mariano on 25/03/16.

@@ -5,17 +5,17 @@
  */
 package edu.proyectofinal.integradorrs.services.tweets.impl;
 
-import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
-import edu.proyectofinal.integradorrs.model.TweetsModel;
-import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
-import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
+import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
+import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;

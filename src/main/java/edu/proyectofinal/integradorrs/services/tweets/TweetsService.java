@@ -6,6 +6,7 @@
 package edu.proyectofinal.integradorrs.services.tweets;
 
 import java.util.Collection;
+
 import twitter4j.Status;
 
 /**
