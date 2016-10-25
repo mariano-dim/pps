@@ -10,6 +10,7 @@ import edu.proyectofinal.integradorrs.model.Usuario;
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 
     
+	
     /**
      *
      * @param email
@@ -17,6 +18,9 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
      */
     @Query("{ 'email' : ?0}")
     public Usuario findByEmail(String email);
+    
+
+    
     
 
 }

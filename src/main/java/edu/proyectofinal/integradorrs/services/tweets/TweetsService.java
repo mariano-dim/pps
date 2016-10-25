@@ -7,6 +7,9 @@ package edu.proyectofinal.integradorrs.services.tweets;
 
 import java.util.Collection;
 
+import org.springframework.social.twitter.api.CursoredList;
+
+import edu.proyectofinal.integradorrs.model.Usuario;
 import twitter4j.Status;
 
 /**
@@ -18,5 +21,7 @@ public interface TweetsService {
     	Collection<Status> getAllTweets(String email);
 
         Collection<Status> getUserTimeline(String user, String email);
+        
+  
     
 }
