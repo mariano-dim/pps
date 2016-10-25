@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import com.mongodb.ServerAddress;
 
 
 @Configuration
@@ -14,13 +13,11 @@ public class SpringMongoConfig extends AbstractMongoConfiguration {
 
     @Override
     @Bean
-    public Mongo mongo() {
-    	try {
-    	Mongo myClient = new MongoClient("54.201.96.80" + ":" + 27017);
-    		//ServerAddress mongodb = new ServerAddress("54.201.96.80",27017);
-    		//Mongo myClient = new MongoClient(mongodb);
+    public Mongo mongo() throws Exception {
     	
-    	
+    	Mongo myClient = new MongoClient("127.0.0.1" + ":" + 27017);
+    	//Mongo myClient = new MongoClient("54.201.96.80" + ":" + 27017);
+    	//DB db = myClient.getDB("admin");
     	
     	boolean auth = myClient.getDB("admin").authenticate("apibackend", "un1caece".toCharArray());
     	if (auth) {
@@ -37,8 +34,7 @@ public class SpringMongoConfig extends AbstractMongoConfiguration {
     	}
     	
     	return myClient;
-    	} catch (Exception e) { System.out.println("Exception ocurred while connecting to DB:"+e.getMessage());}
-		return null;    	
+        	
     }
     @Override
     protected String getDatabaseName(){

@@ -1,7 +1,7 @@
 package edu.proyectofinal.integradorrs.model;
 
 import java.util.Date;
-
+import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "usuarios")
 public class Usuario {
-
+	
+	@Field
+	private String nombre;
+	@Field
+	private String apellido;
+	@Field
+	private String nickname;
     @Id
     private String id;
     @Field
@@ -31,6 +37,8 @@ public class Usuario {
     private String ciudad;
     @Field
     private String calle;
+    @Field
+    private ConcurrentHashMap<String, Long> cuentas;
 
     public Usuario() {
         super();
@@ -49,9 +57,18 @@ public class Usuario {
         this.provincia = provincia;
         this.ciudad = ciudad;
         this.calle = calle;
-
+        this.cuentas = new ConcurrentHashMap<String,Long>();
     }
 
+    public String getNombre() {
+    	return nombre;
+    }
+    public String getApellido() {
+    	return nombre;
+    }
+    public String getNickname() {
+    	return nombre;
+    }
     public String getId() {
         return id;
     }
@@ -130,6 +147,13 @@ public class Usuario {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+    
+    public void setNombre(String nombre) {
+    	this.nombre = nombre;
+    }
+    public void addCuenta(String nombre_cuenta, Long id_cuenta) {
+    	this.cuentas.putIfAbsent(nombre_cuenta, id_cuenta);
     }
 
 //    @Override

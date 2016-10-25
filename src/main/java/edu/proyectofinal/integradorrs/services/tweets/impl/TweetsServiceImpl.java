@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
-import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import twitter4j.Paging;
@@ -70,6 +69,6 @@ public class TweetsServiceImpl implements TweetsService {
       Collection<Status> result = (Collection<Status>)statuses;
       return result;
     }
+
     
-     
 }

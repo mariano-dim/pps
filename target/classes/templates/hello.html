@@ -1,14 +1,13 @@
-<html>
-	<head>
-		<title>Hello Twitter</title>
-	</head>
-	<body>
-		<h3>Hello, <span th:text="${twitterProfile.name}">Some User</span>!</h3>
-		
-		<h4>These are your friends:</h4>
-		
-		<ul>
-			<li th:each="friend:${friends}" th:text="${friend.name}">Friend</li>
-		</ul>
-	</body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </body>
 </html>

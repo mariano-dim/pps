@@ -58,6 +58,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         tokenrepository.save(t);
         return t;
     }
+    
+    @Override
+    public boolean saveUser(Usuario user) {
+    	
+    	if (repository.equals(user)) {
+    		return false;
+    	} else {
+    	repository.save(user);
+    	return true;
+    	}
+    }
 
 }
 
