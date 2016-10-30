@@ -18,10 +18,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 //@EnableWebMvc Security
 //@ComponentScan(basePackageClasses=UsuarioServiceImpl.class)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-     
+    /* 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-    	http.
+    	/*http.
   
 		
 		
@@ -56,4 +56,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("password").roles("USER");
        
     }*/
+       
 }

@@ -18,7 +18,7 @@ public class SpringMongoConfig extends AbstractMongoConfiguration {
     	Mongo myClient = new MongoClient("127.0.0.1" + ":" + 27017);
     	//Mongo myClient = new MongoClient("54.201.96.80" + ":" + 27017);
     	//DB db = myClient.getDB("admin");
-    	
+    	/*
     	boolean auth = myClient.getDB("admin").authenticate("apibackend", "un1caece".toCharArray());
     	if (auth) {
 
@@ -28,13 +28,16 @@ public class SpringMongoConfig extends AbstractMongoConfiguration {
     		document.put("name", "mkyong");
     		table.insert(document);
 			*/
+        /*
     		System.out.println("DB Login is successful!");
     	} else {
     		System.out.println("DB Login is failed!");
     	}
     	
     	return myClient;
-        	
+        */
+         
+       return new MongoClient("127.0.0.1" + ":" + 27017);
     }
     @Override
     protected String getDatabaseName(){
