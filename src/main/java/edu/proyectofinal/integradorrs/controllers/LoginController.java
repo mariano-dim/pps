@@ -1,51 +1,34 @@
 package edu.proyectofinal.integradorrs.controllers;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
-import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
+import edu.proyectofinal.integradorrs.model.Token;
+import java.util.Collection;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 
 @RestController
-
+@CrossOrigin
 @RequestMapping("/api/usuario")
 public class LoginController extends AbstractController<Usuario> {
 
-	
-	
-	@Autowired
+    @Autowired
     private UsuarioService usuarioService;
-	
-	 @RequestMapping(method = RequestMethod.GET, value="/greeting")
-	    public String greeting() {
 
-		 return "Hello"+usuarioService.getById("1").getNombre();
-
-	    }
-	 
-	  @RequestMapping(method = RequestMethod.GET, value="/details")
-	    public String details() {
-
-		  return usuarioService.getById("1").toString();
- 
-	    }
-
-
-	  //atentos al problema de seguridad con esta funcion
-	  
-    @RequestMapping(method = RequestMethod.GET, path="/getall")
+    @RequestMapping(method = RequestMethod.GET, value="/")
     public ResponseEntity<Collection<Usuario>> getAll() {
 
         System.out.println("getAll");
@@ -56,7 +39,7 @@ public class LoginController extends AbstractController<Usuario> {
 
     }
 
-   // fix http://stackoverflow.com/questions/3526523/spring-mvc-pathvariable-getting-truncated
+    // fix http://stackoverflow.com/questions/3526523/spring-mvc-pathvariable-getting-truncated
     @RequestMapping(method = RequestMethod.GET, value = "/email/{email:.+}")
     public ResponseEntity<Usuario> getByEmail(@Validated @PathVariable("email") String email) {
 
@@ -120,22 +103,12 @@ public class LoginController extends AbstractController<Usuario> {
 
     }
     
-    @RequestMapping(method = RequestMethod.POST, value="/savetoken")
+    @RequestMapping(method = RequestMethod.POST, value="/push")
     public ResponseEntity<Token> saveToken(@RequestBody Token token) {
 
         usuarioService.saveToken(token);
 
         return new ResponseEntity<Token>(token, HttpStatus.OK);
-
-    }
-    
-@ResponseBody @RequestMapping(method = RequestMethod.POST, value="/newuser")
-    public String newuser(@RequestBody Usuario user) {
-
-        Usuario newuser = user;
-    	usuarioService.saveUser(user);
-
-        return newuser.toString();
 
     }
 }

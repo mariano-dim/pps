@@ -6,7 +6,6 @@
 package edu.proyectofinal.integradorrs.model;
 
 import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -26,6 +25,10 @@ public class Token {
     private String email;
     @Field
     private String socialnetwork;
+    @Field
+    private String usuariors;
+    @Field
+    private String fotors;
     @Field
     private String token;
     @Field
@@ -106,6 +109,34 @@ public class Token {
     public void setSecret(String secret) {
         this.secret = secret;
     }
+    
+     /**
+     * @return the usuariors
+     */
+    public String getUsuariors() {
+        return usuariors;
+    }
+
+    /**
+     * @param usuariors the usuariors to set
+     */
+    public void setUsuariors(String usuariors) {
+        this.usuariors = usuariors;
+    }
+    
+     /**
+     * @return the fotors
+     */
+    public String getFotors() {
+        return fotors;
+    }
+
+    /**
+     * @param fotors the fotors to set
+     */
+    public void setFotors(String fotors) {
+        this.fotors = fotors;
+    }
 
     
     
@@ -115,6 +146,12 @@ public class Token {
         str.append(" id:- ").append(this.id);
         str.append(" token:- ").append(this.token);
         str.append(" secret:- ").append(this.secret);
+        str.append(" usuariors:- ").append(this.getUsuariors());
+        str.append(" fotors:- ").append(this.getFotors());
         return str.toString();
     }
+
+   
+
+   
 }
