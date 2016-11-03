@@ -21,10 +21,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/usuario")
 public class LoginController extends AbstractController<Usuario> {
-
+    
     @Autowired
     private UsuarioService usuarioService;
 
@@ -111,4 +110,27 @@ public class LoginController extends AbstractController<Usuario> {
         return new ResponseEntity<Token>(token, HttpStatus.OK);
 
     }
+    
+    /*
+    @RequestMapping(method = RequestMethod.DELETE, value="/token")
+    public ResponseEntity<Token> removeToken(@RequestBody Token token) {
+
+        usuarioService.deleteToken(token);
+
+        return new ResponseEntity<Token>(token, HttpStatus.OK);
+
+    }
+    */
+    
+    //Borrar token
+    
+     @RequestMapping(method = RequestMethod.DELETE, value="/token/{email:.+}")
+    //public ResponseEntity<String> removeToken(@Validated @PathVariable("email") String email) {
+    public void removeToken(@Validated @PathVariable("email") String email) {
+    
+        usuarioService.deleteToken(email);
+
+       // return new ResponseEntity<String>(email, HttpStatus.OK);
+    }
+    
 }
