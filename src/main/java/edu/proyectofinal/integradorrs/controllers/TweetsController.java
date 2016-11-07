@@ -1,6 +1,8 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 
+import edu.proyectofinal.integradorrs.model.Post;
+import edu.proyectofinal.integradorrs.model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.proyectofinal.integradorrs.model.TweetsModel;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import java.util.Collection;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import twitter4j.Status;
 
 /**
@@ -48,6 +52,16 @@ public class TweetsController extends AbstractController<Status> {
 
         return super.collectionResult(Status);
 
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value="/Create")
+    public ResponseEntity<Post> PostTweet(@RequestBody Post post) {
+
+        System.out.println("Create Post");
+
+        tweetsService.Post(post.getEmail(), post.getTexto());
+
+        return new ResponseEntity<Post>(post, HttpStatus.OK);
     }
 
 }
