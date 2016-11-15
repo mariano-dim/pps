@@ -56,7 +56,7 @@ public class LoginController extends AbstractController<Usuario> {
     
     @RequestMapping(method = RequestMethod.GET, value = "/token/twitter/email/{email:.+}")
     public ResponseEntity<Token> getTokenByEmail(@Validated @PathVariable("email") String email, String socialnetwork) {
-
+        //Acomode algunas cosas porque no estaba obteniendo el token correctamente.
         //Token token = new Token();
         //socialnetwork = "Twitter";
         System.out.println("getTokenByEmail");
