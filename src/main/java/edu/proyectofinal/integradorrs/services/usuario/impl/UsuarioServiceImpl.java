@@ -74,8 +74,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }*/
     
       @Override
-    public Token deleteToken(String email) {
-        Token t = tokenrepository.findByEmail(email);
+    public Token deleteToken(String email, String rs) {
+        //Token t = tokenrepository.findByEmail(email);
+        Token t = tokenrepository.findByEmailandSN(email, rs);
         Date aDate = new Date();
         t.setCreationDate(aDate);
         t.setModDate(aDate);

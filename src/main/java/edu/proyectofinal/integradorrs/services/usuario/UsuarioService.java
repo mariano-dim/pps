@@ -21,5 +21,5 @@ public interface UsuarioService {
         Token saveToken(Token t);
         
        // Token deleteToken(Token t);
-        Token deleteToken(String email);
+        Token deleteToken(String email, String rs);
 }

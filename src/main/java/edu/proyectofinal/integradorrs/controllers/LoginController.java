@@ -127,11 +127,11 @@ public class LoginController extends AbstractController<Usuario> {
     
     //Borrar token
     
-     @RequestMapping(method = RequestMethod.DELETE, value="/token/{email:.+}")
+     @RequestMapping(method = RequestMethod.DELETE, value="/token/{email:.+}/{socialnetwork}")
     //public ResponseEntity<String> removeToken(@Validated @PathVariable("email") String email) {
-    public void removeToken(@Validated @PathVariable("email") String email) {
+    public void removeToken(@Validated @PathVariable("email") String email, @Validated @PathVariable("socialnetwork") String socialnetwork) {
     
-        usuarioService.deleteToken(email);
+        usuarioService.deleteToken(email,socialnetwork);
 
        // return new ResponseEntity<String>(email, HttpStatus.OK);
     }
