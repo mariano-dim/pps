@@ -1,16 +1,16 @@
 package edu.proyectofinal.integradorrs.services.usuario.impl;
 
+import edu.proyectofinal.integradorrs.model.Token;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.repositorys.TokenRepository;
 import edu.proyectofinal.integradorrs.repositorys.UsuarioRepository;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import java.util.Date;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -44,10 +44,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuario;
     }
 
+    
+     //public Collection<Token> getTokenByEmail(String email) {
+    //Collection<Token> result = (Collection<Token>) tokenrepository.findAll();
     @Override
-    public Collection<Token> getTokenByEmail(String email) {
-        Collection<Token> result = (Collection<Token>) tokenrepository.findAll();
-        return result;
+    public Token getTokenByEmail(String email) {
+   
+        Token t = tokenrepository.findByEmail(email);
+        return t;
     }
 
     @Override
@@ -59,15 +63,25 @@ public class UsuarioServiceImpl implements UsuarioService {
         return t;
     }
     
+    /*
     @Override
-    public boolean saveUser(Usuario user) {
-    	
-    	if (repository.equals(user)) {
-    		return false;
-    	} else {
-    	repository.save(user);
-    	return true;
-    	}
+    public Token deleteToken(Token t) {
+        Date aDate = new Date();
+        t.setCreationDate(aDate);
+        t.setModDate(aDate);
+        tokenrepository.delete(t);
+        return t;
+    }*/
+    
+      @Override
+    public Token deleteToken(String email, String rs) {
+        //Token t = tokenrepository.findByEmail(email);
+        Token t = tokenrepository.findByEmailandSN(email, rs);
+        Date aDate = new Date();
+        t.setCreationDate(aDate);
+        t.setModDate(aDate);
+        tokenrepository.delete(t);
+        return t;
     }
 
 }

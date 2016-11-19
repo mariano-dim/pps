@@ -1,10 +1,10 @@
 package edu.proyectofinal.integradorrs.repositorys;
 
+import edu.proyectofinal.integradorrs.model.Token;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
-import edu.proyectofinal.integradorrs.model.Token;
 
 @RepositoryRestResource(collectionResourceRel = "tokens", path = "tokens")
 public interface TokenRepository extends MongoRepository<Token, String> {
@@ -17,6 +17,12 @@ public interface TokenRepository extends MongoRepository<Token, String> {
      */
     @Query("{ 'email' : ?0}")
     public Token findByEmail(String email);
-    
-
+   
+     /**
+     *
+     * @param email,socialnetwork
+     * @return
+     */
+    @Query("{ 'email' : ?0, 'socialnetwork': ?1 }")
+    public Token findByEmailandSN(String email, String socialnetwork);
 }

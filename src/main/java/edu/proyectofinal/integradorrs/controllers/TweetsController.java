@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import twitter4j.Status;
 
-/**
- *
- * @author Emi
- */
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/tweets")

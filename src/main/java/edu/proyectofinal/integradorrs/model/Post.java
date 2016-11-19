@@ -37,6 +37,10 @@ public class Post {
     }
     
     /**
+=======
+
+    /**
+>>>>>>> afeffbac3c22836de810eafc225d5d842b010373
      * @return the email
      */
     public String getEmail() {

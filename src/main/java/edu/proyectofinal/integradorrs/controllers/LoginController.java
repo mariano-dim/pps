@@ -56,25 +56,28 @@ public class LoginController extends AbstractController<Usuario> {
     
     @RequestMapping(method = RequestMethod.GET, value = "/token/twitter/email/{email:.+}")
     public ResponseEntity<Token> getTokenByEmail(@Validated @PathVariable("email") String email, String socialnetwork) {
-
-        Token token = new Token();
+        //Acomode algunas cosas porque no estaba obteniendo el token correctamente.
+        //Token token = new Token();
+        //socialnetwork = "Twitter";
         System.out.println("getTokenByEmail");
         System.out.println("Email: " + email);
         System.out.println("Social Network: " + socialnetwork);
-
-       Collection<Token> tokens = usuarioService.getTokenByEmail(email);
+        
+        Token token = usuarioService.getTokenByEmail(email);
+       /*Collection<Token> tokens = usuarioService.getTokenByEmail(email);
        for(Token atoken: tokens)
        {
            if(atoken.getSocialnetwork().equals(socialnetwork))
            {
                token = atoken;
            }
-       }
-       
+       }*/
+       //System.out.println(token.getToken());
         if (null == token) {
             throw new EmptyResultException(Usuario.class);
         }
-        return super.singleResult(token);
+        
+       return super.singleResult(token);
 
     }
     
@@ -124,11 +127,11 @@ public class LoginController extends AbstractController<Usuario> {
     
     //Borrar token
     
-     @RequestMapping(method = RequestMethod.DELETE, value="/token/{email:.+}")
+     @RequestMapping(method = RequestMethod.DELETE, value="/token/{email:.+}/{socialnetwork}")
     //public ResponseEntity<String> removeToken(@Validated @PathVariable("email") String email) {
-    public void removeToken(@Validated @PathVariable("email") String email) {
+    public void removeToken(@Validated @PathVariable("email") String email, @Validated @PathVariable("socialnetwork") String socialnetwork) {
     
-        usuarioService.deleteToken(email);
+        usuarioService.deleteToken(email,socialnetwork);
 
        // return new ResponseEntity<String>(email, HttpStatus.OK);
     }
