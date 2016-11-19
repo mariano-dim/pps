@@ -70,5 +70,19 @@ public class TweetsServiceImpl implements TweetsService {
       return result;
     }
 
+    @Override
+    public void Post(String email, String texto) {
+     TwitterCredentials tc = TwitterCredentials.getInstance();
+     ConfigurationBuilder cb = tc.GetCredentials(email);
+    
+     TwitterFactory tf = new TwitterFactory(cb.build());
+     Twitter twitter = tf.getInstance();
+        try {
+            Status status = twitter.updateStatus(texto);
+        } catch (TwitterException ex) {
+            Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     
 }

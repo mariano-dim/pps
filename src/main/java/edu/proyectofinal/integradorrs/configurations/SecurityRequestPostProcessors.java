@@ -13,7 +13,7 @@ package edu.proyectofinal.integradorrs.configurations;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ 
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -53,6 +53,8 @@ import java.util.List;
  *
  * @author Rob Winch
  */
+
+/*
 public final class SecurityRequestPostProcessors {
 
     public static CsrfRequestPostProcessor csrf() {
@@ -64,34 +66,36 @@ public final class SecurityRequestPostProcessors {
      * details are declarative and do not require that the user actually exists.
      * This means that the authorities or roles need to be specified too.
      */
-    public static UserRequestPostProcessor user(Object principal) {
+/*    public static UserRequestPostProcessor user(Object principal) {
         return new UserRequestPostProcessor(principal);
     }
+
+*/
 
     /**
      * Establish a security context for a user with the specified username. The
      * additional details are obtained from the {@link UserDetailsService}
      * declared in the {@link WebApplicationContext}.
-     */
+    
     public static UserDetailsRequestPostProcessor userDeatilsService(String username) {
         return new UserDetailsRequestPostProcessor(username);
     }
-
+ */
     /**
      * Establish a security context with the given {@link SecurityContext} and
      * thus be authenticated with {@link SecurityContext#getAuthentication()}.
-     */
+   
     public SecurityContextRequestPostProcessor securityContext(SecurityContext securityContext) {
         return new SecurityContextRequestPostProcessor(securityContext);
-    }
+    }  
 
     private static class CsrfRequestPostProcessor implements RequestPostProcessor {
 
         private CsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-
+*/
         /* (non-Javadoc)
          * @see org.springframework.test.web.servlet.request.RequestPostProcessor#postProcessRequest(org.springframework.mock.web.MockHttpServletRequest)
-         */
+        
         @Override
         public MockHttpServletRequest postProcessRequest(
                 MockHttpServletRequest request) {
@@ -102,8 +106,8 @@ public final class SecurityRequestPostProcessors {
             return request;
         }
     }
-
-    /** Support class for {@link RequestPostProcessor}'s that establish a Spring Security context */
+ */
+    /** Support class for {@link RequestPostProcessor}'s that establish a Spring Security context
     private static abstract class SecurityContextRequestPostProcessorSupport {
 
         private SecurityContextRepository repository = new HttpSessionSecurityContextRepository();
@@ -157,15 +161,15 @@ public final class SecurityRequestPostProcessors {
             Assert.notNull(principal, "principal cannot be null");
             this.principal = principal;
         }
-
+ */
         /**
          * Sets the prefix to append to each role if the role does not already start with
          * the prefix. If no prefix is desired, an empty String or null can be used.
-         */
+       
         public UserRequestPostProcessor rolePrefix(String rolePrefix) {
             this.rolePrefix = rolePrefix;
             return this;
-        }
+        } */
 
         /**
          * Specify the roles of the user to authenticate as. This method is similar to
@@ -176,7 +180,7 @@ public final class SecurityRequestPostProcessors {
          * default {@code roles("ROLE_USER")} and {@code roles("USER")} are equivalent.
          * @see #authorities(GrantedAuthority...)
          * @see #rolePrefix(String)
-         */
+         
         public UserRequestPostProcessor roles(String... roles) {
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles.length);
             for(String role : roles) {
@@ -187,13 +191,13 @@ public final class SecurityRequestPostProcessors {
                 }
             }
             return this;
-        }
+        } 
 
         /**
          * Populates the user's {@link GrantedAuthority}'s.
          * @param authorities
          * @see #roles(String...)
-         */
+         
         public UserRequestPostProcessor authorities(GrantedAuthority... authorities) {
             this.authorities = Arrays.asList(authorities);
             return this;
@@ -224,7 +228,7 @@ public final class SecurityRequestPostProcessors {
          *
          * <p>By default a lookup of {@link UserDetailsService} is performed by type. This
          * can be problematic if multiple {@link UserDetailsService} beans are declared.
-         */
+         
         public UserDetailsRequestPostProcessor userDetailsServiceBeanId(String userDetailsServiceBeanId) {
             this.userDetailsServiceBeanId = userDetailsServiceBeanId;
             return this;
@@ -253,4 +257,4 @@ public final class SecurityRequestPostProcessors {
     }
 
     private SecurityRequestPostProcessors() {}
-}
+}*/

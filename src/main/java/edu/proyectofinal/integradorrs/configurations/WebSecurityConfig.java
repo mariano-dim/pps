@@ -1,5 +1,5 @@
 package edu.proyectofinal.integradorrs.configurations;
-
+/*
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -55,6 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.withDefaultSchema()
                 .withUser("user").password("password").roles("USER");
        
-    }*/
+    }
        
-}
+}*/

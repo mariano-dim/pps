@@ -1,6 +1,8 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 import edu.proyectofinal.integradorrs.model.Token;
+import facebook4j.Post;
+import facebook4j.ResponseList;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,6 +59,12 @@ public class AbstractController<T > {
     protected ResponseEntity<Token> singleResult(Token token) {
         HttpHeaders httpHeaders = buildHeaders();
         return new ResponseEntity<Token>(token, httpHeaders, HttpStatus.OK);    }
+
+    ResponseEntity<ResponseList<Post>> collectionResult(ResponseList<Post> Status) {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<ResponseList<Post>>(Status, httpHeaders, HttpStatus.OK);    
+
+    }
 
 }
 
