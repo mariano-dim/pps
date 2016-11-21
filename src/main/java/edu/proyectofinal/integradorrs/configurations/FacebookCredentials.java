@@ -47,7 +47,7 @@ public class FacebookCredentials {
    public Token GetToken(String email)
    {
       RestTemplate restTemplate = new RestTemplate();
-      Token atoken = restTemplate.getForObject("http://localhost:8080/api/usuario/token/twitter/email/"+email+"?socialnetwork=Facebook",Token.class);
+      Token atoken = restTemplate.getForObject("http://localhost:8080/api/usuario/token/fb/email/"+email,Token.class);
       return atoken;
    }
 }

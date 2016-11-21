@@ -14,6 +14,8 @@ public interface UsuarioService {
         //Collection<Token> getTokenByEmail(String email);
         Token getTokenByEmail(String email);
 	
+        public Token getTokenByEmailAndSN(String email, String rs);
+        
 	Usuario getById(String id);
 
 	Usuario save(Usuario t);

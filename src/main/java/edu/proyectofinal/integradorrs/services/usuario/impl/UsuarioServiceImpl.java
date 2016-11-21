@@ -53,7 +53,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         Token t = tokenrepository.findByEmail(email);
         return t;
     }
+    
+    @Override
+    public Token getTokenByEmailAndSN(String email, String rs) {
+   
+        Token t = tokenrepository.findByEmailandSN(email, rs);
+        return t;
+    }
 
+    
     @Override
     public Token saveToken(Token t) {
         Date aDate = new Date();

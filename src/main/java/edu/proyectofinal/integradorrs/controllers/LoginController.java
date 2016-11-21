@@ -54,16 +54,23 @@ public class LoginController extends AbstractController<Usuario> {
 
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/token/twitter/email/{email:.+}")
-    public ResponseEntity<Token> getTokenByEmail(@Validated @PathVariable("email") String email, String socialnetwork) {
+    @RequestMapping(method = RequestMethod.GET, value = "/token/{rs}/email/{email:.+}")
+    public ResponseEntity<Token> getTokenByEmail(@Validated @PathVariable("rs") String rs, @Validated @PathVariable("email") String email) {
         //Acomode algunas cosas porque no estaba obteniendo el token correctamente.
         //Token token = new Token();
         //socialnetwork = "Twitter";
-        System.out.println("getTokenByEmail");
+       
+        if (rs.equals("fb")){
+            rs = "Facebook";
+        } else if (rs.equals("twitter")){
+            rs = "Twitter";
+        }
+        System.out.println("getTokenByEmailAndSN");
         System.out.println("Email: " + email);
-        System.out.println("Social Network: " + socialnetwork);
+        System.out.println("Social Network: " + rs);
         
-        Token token = usuarioService.getTokenByEmail(email);
+        Token token = usuarioService.getTokenByEmailAndSN(email, rs);
+        //Token token = usuarioService.getTokenByEmail(email);
        /*Collection<Token> tokens = usuarioService.getTokenByEmail(email);
        for(Token atoken: tokens)
        {
