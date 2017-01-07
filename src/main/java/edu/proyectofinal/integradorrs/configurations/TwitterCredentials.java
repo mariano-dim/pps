@@ -1,8 +1,20 @@
 package edu.proyectofinal.integradorrs.configurations;
 
-import org.springframework.web.client.RestTemplate;
-
 import edu.proyectofinal.integradorrs.model.Token;
+import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import edu.proyectofinal.integradorrs.services.usuario.impl.UsuarioServiceImpl;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
