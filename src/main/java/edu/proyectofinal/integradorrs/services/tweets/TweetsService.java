@@ -1,5 +1,6 @@
 package edu.proyectofinal.integradorrs.services.tweets;
 
+import edu.proyectofinal.integradorrs.model.Update;
 import java.util.Collection;
 import twitter4j.Status;
 
@@ -10,7 +11,11 @@ public interface TweetsService {
 
         Collection<Status> getUserTimeline(String user, String email);
 
+        Status GetById (String Id, String email);
+        
         public void Post(String email, String texto);
+        
+        Update saveUpdate(Update update);
     
 }
 

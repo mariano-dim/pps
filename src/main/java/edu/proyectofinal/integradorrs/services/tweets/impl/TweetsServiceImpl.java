@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
+import edu.proyectofinal.integradorrs.model.Update;
 import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
+import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -31,7 +33,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TweetsServiceImpl implements TweetsService {
 
     @Autowired
-    private TweetsRepository repository;
+    private UpdatesRepository updatesrepository;
 
     @Override
     public Collection<Status> getAllTweets(String email) {
@@ -74,14 +76,39 @@ public class TweetsServiceImpl implements TweetsService {
     public void Post(String email, String texto) {
      TwitterCredentials tc = TwitterCredentials.getInstance();
      ConfigurationBuilder cb = tc.GetCredentials(email);
-    
+     Update anUpdate = new Update();
      TwitterFactory tf = new TwitterFactory(cb.build());
      Twitter twitter = tf.getInstance();
         try {
             Status status = twitter.updateStatus(texto);
+            anUpdate.setid(Long.toString(status.getId()));
+            anUpdate.setEmail(email);
+            anUpdate.setSocialnetwork("Twitter");
+            anUpdate.setTexto(texto);
+            this.saveUpdate(anUpdate);
         } catch (TwitterException ex) {
             Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public Update saveUpdate(Update update) {
+        updatesrepository.save(update);
+        return update;    }
+
+    @Override
+    public Status GetById(String Id, String email) {
+     TwitterCredentials tc = TwitterCredentials.getInstance();
+     ConfigurationBuilder cb = tc.GetCredentials(email);
+     TwitterFactory tf = new TwitterFactory(cb.build());
+     Twitter twitter = tf.getInstance();
+     Status aStatus = null;
+        try {
+            aStatus = twitter.showStatus(Long.parseLong(Id));
+        } catch (TwitterException ex) {
+            Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        return aStatus;
     }
 
     

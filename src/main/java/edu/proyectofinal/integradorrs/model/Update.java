@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  *
  * @author SocialFocus
  */
-public class Post {
+public class Update {
     
 
 
@@ -24,17 +24,47 @@ public class Post {
     @Field
     private String texto;
     @Field
-    private String result;
+    private String id;
+    @Field
+    private int likes;
+    @Field
+    private int shares;
+    @Field
+    private int comments;
 
-    public String getResult() {
-        return result;
+    public String getid() {
+        return id;
+    }
+    
+     public int getlikes() {
+        return likes;
+    }
+     
+     public int getshares() {
+        return shares;
+    }
+     
+     public int getcomments() {
+        return comments;
     }
 
     /**
      * @param email the email to set
      */
-    public void setResult(String result) {
-        this.result = result;
+    public void setid(String id) {
+        this.id = id;
+    }
+    
+    public void setlikes(int likes) {
+        this.likes = likes;
+    }
+    
+    public void setshares(int shares) {
+        this.shares = shares;
+    }
+    
+    public void setcomments(int comments) {
+        this.comments = comments;
     }
     
     /**

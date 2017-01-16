@@ -5,9 +5,10 @@
  */
 package edu.proyectofinal.integradorrs.services.facebook;
 
+import edu.proyectofinal.integradorrs.model.Update;
+import facebook4j.Post;
 import facebook4j.ResponseList;
 import java.util.Collection;
-import twitter4j.Status;
 
 /**
  *
@@ -17,8 +18,12 @@ public interface FaceService {
 
     ResponseList <facebook4j.Post> getAllPost(String email);
 
-    ResponseList <facebook4j.Post> getUserTimeline(String user, String email);
+    ResponseList <facebook4j.Post> getUserTimeline(String email);
 
     public String Post(String email, String texto);
+    
+    Post GetById(String id, String email);
+    
+    Update saveUpdate(Update update);
     
 }

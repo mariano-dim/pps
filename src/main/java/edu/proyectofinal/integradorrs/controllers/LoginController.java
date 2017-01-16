@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+
 @RestController
 @RequestMapping("/api/usuario")
 public class LoginController extends AbstractController<Usuario> {
