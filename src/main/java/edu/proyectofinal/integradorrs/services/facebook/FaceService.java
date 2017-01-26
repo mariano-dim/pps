@@ -9,6 +9,7 @@ import edu.proyectofinal.integradorrs.model.Update;
 import facebook4j.Post;
 import facebook4j.ResponseList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,8 @@ public interface FaceService {
     public String Post(String email, String texto);
     
     Post GetById(String id, String email);
+    
+    ResponseList<Post> GetByMultiplesId(List<String> ids, String email);
     
     Update saveUpdate(Update update);
     

@@ -75,6 +75,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
            if(anUpdate.getSocialnetwork().equals("Facebook"))
            {
                facebook4j.Post aPost = facebookservice.GetById(anUpdate.getid(), email);
+               resultUpdate.setcreationdate(aPost.getCreatedTime());
                resultUpdate.setlikes(aPost.getLikes().size());
                if(aPost.getSharesCount() != null)
                {
@@ -85,6 +86,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
            else
            {
                Status aStatus = twitterservice.GetById(anUpdate.getid(), email);
+               resultUpdate.setcreationdate(aStatus.getCreatedAt());
                resultUpdate.setlikes(aStatus.getFavoriteCount());
                resultUpdate.setshares(aStatus.getRetweetCount());
                resultUpdate.setcomments(aStatus.getContributors().length);

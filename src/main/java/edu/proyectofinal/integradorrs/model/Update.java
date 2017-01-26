@@ -22,6 +22,8 @@ public class Update {
     @Field
     private String socialnetwork;
     @Field
+    private Date creationDate;
+    @Field
     private String texto;
     @Field
     private String id;
@@ -47,12 +49,20 @@ public class Update {
      public int getcomments() {
         return comments;
     }
+     
+     public Date getCreationDate() {
+        return creationDate;
+    }
 
     /**
      * @param email the email to set
      */
     public void setid(String id) {
         this.id = id;
+    }
+    
+     public void setcreationdate(Date creationDate) {
+        this.creationDate = creationDate;
     }
     
     public void setlikes(int likes) {

@@ -119,4 +119,12 @@ public class FaceServiceImpl implements FaceService {
         
         return aPost;
     }
+
+    @Override
+    public ResponseList<facebook4j.Post> GetByMultiplesId(List<String> ids, String email) {
+        facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
+        ResponseList<facebook4j.Post> aPosts = null;
+        
+        return aPosts;
+    }
 }
