@@ -41,4 +41,10 @@ public class AnalyticsController extends AbstractController<Update> {
 
     }
     
+    @RequestMapping(method = RequestMethod.POST, value="/informe/historico/seguidores")
+    public void save() {
+        
+        analyticsService.SaveFollowers();
+    }
+    
 }

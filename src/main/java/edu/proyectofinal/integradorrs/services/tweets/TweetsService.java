@@ -16,6 +16,8 @@ public interface TweetsService {
         public void Post(String email, String texto);
         
         Update saveUpdate(Update update);
+
+    public int GetFollowers(String email);
     
 }
 

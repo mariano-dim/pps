@@ -28,5 +28,7 @@ public interface FaceService {
     ResponseList<Post> GetByMultiplesId(List<String> ids, String email);
     
     Update saveUpdate(Update update);
+
+    public int GetFollowers(String email);
     
 }

@@ -15,7 +15,11 @@ import java.util.Collection;
  * @author Emi
  */
 public interface AnalyticsService {
+
+    
     
      public Collection<Update> getUpdatesReport(String email);
+     
+      void SaveFollowers();
     
 }

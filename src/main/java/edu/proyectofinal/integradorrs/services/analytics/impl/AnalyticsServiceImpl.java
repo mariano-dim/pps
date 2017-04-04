@@ -18,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
+import edu.proyectofinal.integradorrs.model.FollowersHistory;
 import edu.proyectofinal.integradorrs.model.Post;
+import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.Update;
+import edu.proyectofinal.integradorrs.repositorys.FollowersHistoryRepository;
 import edu.proyectofinal.integradorrs.repositorys.TokenRepository;
 import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
 import edu.proyectofinal.integradorrs.services.facebook.FaceService;
@@ -36,7 +39,9 @@ import org.springframework.http.MediaType;
 import org.springframework.social.facebook.api.Facebook;
 import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
 import edu.proyectofinal.integradorrs.services.analytics.AnalyticsService;
+import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
 import java.util.ArrayList;
+import java.util.Collections;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 
@@ -53,9 +58,13 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Autowired
     private UpdatesRepository updatesrepository;
     @Autowired
+    private UsuarioService usuarioservice;
+    @Autowired
     private FaceService facebookservice;
     @Autowired
     private TweetsService twitterservice;
+    @Autowired
+    private FollowersHistoryRepository followershistoryrepository;
 
     @Override
     @SuppressWarnings("empty-statement")
@@ -101,6 +110,24 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         
         return resultUpdates;
     }
-    
-    
+
+    @Override
+    public void SaveFollowers() {
+        String email;
+        String SocialNetwork;
+        int Followers;
+        Collection<Token> tokens = usuarioservice.getAllTokens();
+        for(Token aToken: tokens)
+        {
+            if(aToken.getSocialnetwork().equals("Facebook"))
+            {
+                Followers = facebookservice.GetFollowers(aToken.getEmail());       
+            }
+            else
+            {
+                Followers = twitterservice.GetFollowers(aToken.getEmail());         
+            }
+            followershistoryrepository.save(new FollowersHistory(aToken.getEmail(),aToken.getSocialnetwork(),Followers));    
+        }
+    }
 }

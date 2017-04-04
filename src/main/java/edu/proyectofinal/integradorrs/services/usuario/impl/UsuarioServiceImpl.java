@@ -92,5 +92,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         return t;
     }
 
+    @Override
+    public Collection<Token> getAllTokens() {
+        return tokenrepository.findAll();
+    }
+
 }
 

@@ -9,6 +9,8 @@ public interface UsuarioService {
 
 	Collection<Usuario> getAllUsuarios();
 	
+        Collection<Token> getAllTokens();
+        
 	Usuario getByEmail(String email);
         
         //Collection<Token> getTokenByEmail(String email);
