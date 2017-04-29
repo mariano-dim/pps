@@ -10,6 +10,7 @@ import facebook4j.Post;
 import facebook4j.ResponseList;
 import java.util.Collection;
 import java.util.List;
+import twitter4j.Status;
 
 /**
  *
@@ -24,6 +25,8 @@ public interface FaceService {
     public String Post(String email, String texto);
     
     Post GetById(String id, String email);
+    
+    Collection<Update> ToUpdateCollection(Collection<facebook4j.Post> aCollection);
     
     ResponseList<Post> GetByMultiplesId(List<String> ids, String email);
     

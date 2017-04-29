@@ -10,6 +10,10 @@ public interface TweetsService {
     	Collection<Status> getAllTweets(String email);
 
         Collection<Status> getUserTimeline(String user, String email);
+        
+        Collection<Status> getUserTimeline(String email);
+        
+        Collection<Update> ToUpdateCollection(Collection<Status> aCollection);
 
         Status GetById (String Id, String email);
         

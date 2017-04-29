@@ -62,7 +62,7 @@ public class TweetsServiceImpl implements TweetsService {
      TwitterFactory tf = new TwitterFactory(cb.build());
      Twitter twitter = tf.getInstance();
      List<Status> statuses = null;    
-     Paging paging = new Paging(1, 30);
+     Paging paging = new Paging(1, 100);
         try {
             statuses = twitter.getUserTimeline(user, paging);
         } catch (TwitterException ex) {
@@ -94,7 +94,8 @@ public class TweetsServiceImpl implements TweetsService {
     @Override
     public Update saveUpdate(Update update) {
         updatesrepository.save(update);
-        return update;    }
+        return update;   
+    }
 
     @Override
     public Status GetById(String Id, String email) {
@@ -124,6 +125,33 @@ public class TweetsServiceImpl implements TweetsService {
             Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Followers;
+    }
+
+    @Override
+    public Collection<Status> getUserTimeline(String email) {
+        TwitterCredentials tc = TwitterCredentials.getInstance();
+     ConfigurationBuilder cb = tc.GetCredentials(email);
+    
+     TwitterFactory tf = new TwitterFactory(cb.build());
+     Twitter twitter = tf.getInstance();
+     List<Status> statuses = null;    
+     Paging paging = new Paging(1, 50);
+        try {
+            statuses = twitter.getUserTimeline();
+        } catch (TwitterException ex) {
+            Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      Collection<Status> result = (Collection<Status>)statuses;
+      return result;
+    }
+
+    @Override
+    public Collection<Update> ToUpdateCollection(Collection<Status> aCollection) {
+        
+       Collection<Update> aResult = null;
+
+        return aResult;
+        
     }
 
     

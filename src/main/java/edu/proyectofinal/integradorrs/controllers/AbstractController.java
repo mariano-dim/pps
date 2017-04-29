@@ -1,6 +1,8 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 import edu.proyectofinal.integradorrs.model.Token;
+import edu.proyectofinal.integradorrs.model.UnifiedUpdate;
+import edu.proyectofinal.integradorrs.model.Update;
 import facebook4j.Post;
 import facebook4j.ResponseList;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.nio.charset.Charset;
 import java.util.Collection;
+import twitter4j.Status;
 
 /**
  * Created by mariano on 25/03/16.

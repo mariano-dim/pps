@@ -34,6 +34,7 @@ import org.apache.catalina.WebResource;
 import org.springframework.http.MediaType;
 import org.springframework.social.facebook.api.Facebook;
 import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
+import facebook4j.Reading;
 
 
 /**
@@ -67,7 +68,7 @@ public class FaceServiceImpl implements FaceService {
         ResponseList<facebook4j.Post> result = null;
         facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
         try {
-            result = facebook.getPosts();
+            result = facebook.getPosts(new Reading().limit(100));
         } catch (FacebookException ex) {
             System.out.println(ex);
            //Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null,ex);
@@ -138,5 +139,10 @@ public class FaceServiceImpl implements FaceService {
             Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Followers;
+    }
+
+    @Override
+    public Collection<Update> ToUpdateCollection(Collection<facebook4j.Post> aCollection) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
