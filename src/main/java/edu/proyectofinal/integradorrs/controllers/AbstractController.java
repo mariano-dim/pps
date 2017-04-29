@@ -69,5 +69,10 @@ public class AbstractController<T > {
 
     }
 
+    ResponseEntity<Update> collectionResult(Update Status) {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<Update>(Status, httpHeaders, HttpStatus.OK);    
+    }
+
 }
 

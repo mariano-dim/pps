@@ -1,6 +1,7 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 
+import edu.proyectofinal.integradorrs.Adapters.Adapter;
 import edu.proyectofinal.integradorrs.model.Post;
 import edu.proyectofinal.integradorrs.model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.proyectofinal.integradorrs.model.TweetsModel;
+import edu.proyectofinal.integradorrs.model.Update;
 import edu.proyectofinal.integradorrs.services.facebook.FaceService;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import facebook4j.ResponseList;
@@ -53,6 +55,18 @@ public class FaceController extends AbstractController<Status> {
         System.out.println(email);
 
         ResponseList<facebook4j.Post> Status = faceService.getUserTimeline(email);
+
+        return super.collectionResult(Status);
+
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value="/getbyid/{email:.+}")
+    public ResponseEntity<Update> getByID(@Validated @PathVariable("email") String email,String id) {
+
+        System.out.println("Obtener publicación propia por ID de post");
+        System.out.println(email);
+
+        Update Status = Adapter.FacebookPostToUpdate(email, faceService.GetById(id, email));
 
         return super.collectionResult(Status);
 
