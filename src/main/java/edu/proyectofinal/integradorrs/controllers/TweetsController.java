@@ -1,15 +1,15 @@
 package edu.proyectofinal.integradorrs.controllers;
 
 
+import edu.proyectofinal.integradorrs.Adapters.Adapter;
 import edu.proyectofinal.integradorrs.model.Post;
-import edu.proyectofinal.integradorrs.model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.proyectofinal.integradorrs.model.TweetsModel;
+import edu.proyectofinal.integradorrs.model.Update;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import java.util.Collection;
 import org.springframework.http.HttpStatus;
@@ -46,6 +46,18 @@ public class TweetsController extends AbstractController<Status> {
         System.out.println("getAll");
 
         Collection<Status> Status = tweetsService.getUserTimeline(user, email);
+
+        return super.collectionResult(Status);
+
+    }
+    
+     @RequestMapping(method = RequestMethod.GET, value="/getbyid/{email:.+}")
+    public ResponseEntity<Update> getByID(@Validated @PathVariable("email") String email,String id) {
+
+        System.out.println("Obtener publicación propia por ID de post");
+        System.out.println(email);
+
+        Update Status = Adapter.TwitterStatusToUpdate(email, tweetsService.GetById(id, email));
 
         return super.collectionResult(Status);
 

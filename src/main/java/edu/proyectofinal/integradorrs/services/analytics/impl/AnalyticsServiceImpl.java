@@ -7,6 +7,7 @@ package edu.proyectofinal.integradorrs.services.analytics.impl;
 
 import edu.proyectofinal.integradorrs.services.facebook.impl.*;
 import ch.qos.logback.core.net.server.Client;
+import edu.proyectofinal.integradorrs.Adapters.Adapter;
 import edu.proyectofinal.integradorrs.configurations.FacebookCredentials;
 import edu.proyectofinal.integradorrs.services.tweets.impl.*;
 import java.util.Collection;
@@ -18,13 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
+import edu.proyectofinal.integradorrs.model.Favorite;
 import edu.proyectofinal.integradorrs.model.FollowersHistory;
 import edu.proyectofinal.integradorrs.model.Post;
 import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.Update;
+import edu.proyectofinal.integradorrs.model.UpdateHistory;
 import edu.proyectofinal.integradorrs.repositorys.FollowersHistoryRepository;
 import edu.proyectofinal.integradorrs.repositorys.TokenRepository;
 import edu.proyectofinal.integradorrs.repositorys.TweetsRepository;
+import edu.proyectofinal.integradorrs.repositorys.UpdatesHistoryRepository;
 import edu.proyectofinal.integradorrs.services.facebook.FaceService;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import facebook4j.FacebookException;
@@ -39,11 +43,11 @@ import org.springframework.http.MediaType;
 import org.springframework.social.facebook.api.Facebook;
 import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
 import edu.proyectofinal.integradorrs.services.analytics.AnalyticsService;
+import edu.proyectofinal.integradorrs.services.favorites.FavoriteService;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
 import java.util.ArrayList;
 import java.util.Collections;
 import twitter4j.Status;
-import twitter4j.TwitterException;
 
 
 /**
@@ -65,6 +69,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     private TweetsService twitterservice;
     @Autowired
     private FollowersHistoryRepository followershistoryrepository;
+    @Autowired
+    private UpdatesHistoryRepository updateshistoryrepository;
+    @Autowired
+    private FavoriteService favoriteService;
 
     @Override
     @SuppressWarnings("empty-statement")
@@ -128,6 +136,35 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 Followers = twitterservice.GetFollowers(aToken.getEmail());         
             }
             followershistoryrepository.save(new FollowersHistory(aToken.getEmail(),aToken.getSocialnetwork(),Followers));    
+        }
+    }
+
+    @Override
+    public void SaveUpdatesHistory() {
+        String email;
+        String SocialNetwork;
+        Update anUpdate;
+        Collection<Favorite> favorites = favoriteService.getAllFavorite();
+        for(Favorite aFavorite: favorites)
+        {
+            if(aFavorite.getSocialnetwork().equals("Facebook"))
+            {
+                anUpdate = Adapter.FacebookPostToUpdate(aFavorite.getEmail(), (facebookservice.GetById(aFavorite.getId_update(), aFavorite.getEmail())));       
+            }
+            else
+            {
+                anUpdate = Adapter.TwitterStatusToUpdate(aFavorite.getEmail(), twitterservice.GetById(aFavorite.getId_update(), aFavorite.getEmail()));
+            }
+            UpdateHistory anUH = new UpdateHistory();
+            anUH.setEmail(anUpdate.getEmail());
+            anUH.setSocialnetwork(anUpdate.getSocialnetwork());
+            anUH.setTexto(anUpdate.getTexto());
+            anUH.setcreationdate(anUpdate.getCreationDate());
+            anUH.setcomments(anUpdate.getcomments());
+            //anUH.setid(anUpdate.getid());
+            anUH.setlikes(anUpdate.getlikes());
+            anUH.setshares(anUpdate.getshares());
+            updateshistoryrepository.save(anUH);
         }
     }
 }

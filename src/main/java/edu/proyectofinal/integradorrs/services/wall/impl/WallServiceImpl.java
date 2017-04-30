@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 import twitter4j.Status;
 import java.util.List;
 import edu.proyectofinal.integradorrs.comparators.UpdatesSort;
+import edu.proyectofinal.integradorrs.services.favorites.FavoriteService;
 import sun.reflect.generics.tree.Tree;
 
 /**
@@ -48,6 +49,8 @@ public class WallServiceImpl implements WallService {
     private TweetsService twitterservice;
     @Autowired
     private AnalyticsService analitycsService;
+    @Autowired
+    private FavoriteService favoriteService;
    // UpdatesSort comparator = new UpdatesSort();
     
     @Override
@@ -103,7 +106,7 @@ public class WallServiceImpl implements WallService {
            anUpdate.setTexto(aTWPost.getText());
            anUpdate.setcreationdate(aTWPost.getCreatedAt());
            anUpdate.setid(String.valueOf(aTWPost.getId()));
-           anUpdate.setcomments(aTWPost.getContributors().length);
+           anUpdate.setcomments(aTWPost.getUserMentionEntities().length);
            anUpdate.setlikes(aTWPost.getFavoriteCount());
            anUpdate.setshares(aTWPost.getRetweetCount());
            anUpdates.add(anUpdate);
@@ -113,7 +116,7 @@ public class WallServiceImpl implements WallService {
        
        Map<String, List<Update>> map = new java.util.HashMap<String, List<Update>>();
         for (Update item : anUpdates) {
-          List<Update> list = map.get(item.getTexto());
+         List<Update> list = map.get(item.getTexto());
           if (list == null) {
             list = new ArrayList<Update>();
             map.put(item.getTexto(), list);
@@ -169,6 +172,19 @@ public class WallServiceImpl implements WallService {
                     anUnifiedUpdate.setComments_tw(entry.getValue().get(0).getcomments());
                     anUnifiedUpdate.setShares_fb(-1);
                     anUnifiedUpdate.setShares_tw(entry.getValue().get(0).getshares());
+                }
+            }
+            if((anUnifiedUpdate.getid_fb() != "-1")&&(anUnifiedUpdate.getid_tw() != "-1"))
+            {
+                anUnifiedUpdate.setFavorite((favoriteService.IsFavorite(email, anUnifiedUpdate.getid_fb()) && (favoriteService.IsFavorite(email, anUnifiedUpdate.getid_tw()))) == true? 1:0);
+            }else
+            {
+                if(anUnifiedUpdate.getid_fb() != "-1")
+                {
+                    anUnifiedUpdate.setFavorite(favoriteService.IsFavorite(email, anUnifiedUpdate.getid_fb()) == true ? 1:0);
+                }else
+                {
+                                        anUnifiedUpdate.setFavorite(favoriteService.IsFavorite(email, anUnifiedUpdate.getid_tw()) == true ? 1:0);
                 }
             }
             anUnifiedUpdates.add(anUnifiedUpdate);

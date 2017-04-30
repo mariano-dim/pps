@@ -35,4 +35,9 @@ public class AnalyticsController extends AbstractController<Update> {
         analyticsService.SaveFollowers();
     }
     
+    @RequestMapping(method = RequestMethod.POST, value="/informe/historico/posteos")
+    public void saveUpdatesHistory() {
+        
+        analyticsService.SaveUpdatesHistory();
+    }
 }

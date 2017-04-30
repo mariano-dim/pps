@@ -6,6 +6,7 @@
 package edu.proyectofinal.integradorrs.Adapters;
 
 import edu.proyectofinal.integradorrs.model.Update;
+import twitter4j.Status;
 
 /**
  *
@@ -13,34 +14,49 @@ import edu.proyectofinal.integradorrs.model.Update;
  */
 public class Adapter {
     
-    public static Update FacebookPostToUpdate(String email,facebook4j.Post aPost)      
+    public static Update FacebookPostToUpdate(String email,facebook4j.Post aStatus)      
     {
         Update anUpdate = new Update();
-        if(aPost != null){
+        if(aStatus != null){
            anUpdate.setEmail(email);
            anUpdate.setSocialnetwork("Facebook");
-           anUpdate.setTexto(aPost.getMessage());
-           anUpdate.setcreationdate(aPost.getCreatedTime());
-           anUpdate.setid(aPost.getId());
-           if(aPost.getComments().getCount() == null)
+           anUpdate.setTexto(aStatus.getMessage());
+           anUpdate.setcreationdate(aStatus.getCreatedTime());
+           anUpdate.setid(aStatus.getId());
+           if(aStatus.getComments().getCount() == null)
            {
             anUpdate.setcomments(0);
            }else{
-                anUpdate.setcomments(aPost.getComments().getCount());
+                anUpdate.setcomments(aStatus.getComments().getCount());
            }
-           if(aPost.getLikes().getCount() == null)
+           if(aStatus.getLikes().getCount() == null)
            {              
                anUpdate.setlikes(0);
            }else{
-               anUpdate.setlikes(aPost.getLikes().getCount());
+               anUpdate.setlikes(aStatus.getLikes().getCount());
            }
-           if(aPost.getSharesCount() == null)
+           if(aStatus.getSharesCount() == null)
            {
                 anUpdate.setshares(0);
            }else
            {
-              anUpdate.setshares(aPost.getSharesCount());
+              anUpdate.setshares(aStatus.getSharesCount());
            }
+        }
+        return anUpdate;
+    }
+
+    public static Update TwitterStatusToUpdate(String email, Status aStatus) {
+        Update anUpdate = new Update();
+        if(aStatus != null){
+           anUpdate.setEmail(email);
+           anUpdate.setSocialnetwork("Twitter");
+           anUpdate.setTexto(aStatus.getText());
+           anUpdate.setcreationdate(aStatus.getCreatedAt());
+           anUpdate.setid(String.valueOf(aStatus.getId()));
+           anUpdate.setcomments(aStatus.getUserMentionEntities().length);
+           anUpdate.setlikes(aStatus.getFavoriteCount());
+           anUpdate.setshares(aStatus.getRetweetCount());
         }
         return anUpdate;
     }

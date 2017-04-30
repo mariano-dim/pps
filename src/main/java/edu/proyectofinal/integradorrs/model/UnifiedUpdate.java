@@ -19,6 +19,9 @@ public class UnifiedUpdate implements Comparable<UnifiedUpdate> {
     private String email;
     @Field
     private String socialnetwork;
+
+    @Field
+    private int favorite;
     @Field
     private String id_tw;
     @Field
@@ -46,6 +49,14 @@ public class UnifiedUpdate implements Comparable<UnifiedUpdate> {
 
     public void setShares_fb(int shares_fb) {
         this.shares_fb = shares_fb;
+    }
+    
+    public int getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
     }
     
     public String getid_fb() {
