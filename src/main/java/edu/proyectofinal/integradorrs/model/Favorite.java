@@ -5,6 +5,7 @@
  */
 package edu.proyectofinal.integradorrs.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -28,7 +29,9 @@ public class Favorite {
     
     public Favorite (String email, String socialnetwork, String id_update)
     {
-        this.since = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR_OF_DAY, -3);
+        this.since = cal.getTime();
         this.email = email;
         this.socialnetwork = socialnetwork;
         this.id_update = id_update;

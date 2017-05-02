@@ -66,14 +66,14 @@ public class WallController extends AbstractController<UnifiedUpdate> {
         
         Collection<UnifiedUpdate> aResult = new ArrayList();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        System.out.println("Operación de guardado de favoritos");
+        System.out.println("Operación de borrado de favoritos");
         System.out.println("Inicio: " + dateFormat.format(new Date()));
 
-        if(id_fb != "-1")
+        if(!id_fb.contains("-1"))
         {
             favService.delete(email,id_fb);
         }
-        if(id_tw != "-1")
+        if(!id_tw.contains("-1"))
         {
             favService.delete(email,id_tw);
         }

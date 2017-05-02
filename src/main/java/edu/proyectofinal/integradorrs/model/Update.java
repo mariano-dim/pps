@@ -23,7 +23,7 @@ public class Update implements Comparable<Update> {
     private Date creationDate;
     @Field
     private String texto;
-    @Field
+    @Id
     private String id;
     @Field
     private int likes;
