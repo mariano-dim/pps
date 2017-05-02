@@ -143,5 +143,30 @@ public class LoginController extends AbstractController<Usuario> {
 
        // return new ResponseEntity<String>(email, HttpStatus.OK);
     }
+     
+     
+     
+     
+	@RequestMapping(method = RequestMethod.PATCH, 
+			        value = "/edit/email/{email:.+}")
+	public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
+			@RequestBody Usuario usuariop) {
+
+		System.out.println("patchUsuario");
+		System.out.println("email" + email);
+		
+		Usuario usuario = usuarioService.patch(usuariop, email);
+
+		// En el caso que se requiera pasar algo en el Header
+		HttpHeaders headers = new HttpHeaders();
+
+		Usuario usuarioDB = usuarioService.getByEmail(email);
+		
+		if (null == usuarioDB) {
+			throw new EmptyResultException(Usuario.class);
+		}
+
+		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	}
+     
     
 }
