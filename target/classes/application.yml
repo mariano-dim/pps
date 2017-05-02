@@ -20,4 +20,6 @@ endpoints:
 spring.social.twitter.appId: ogIANEpF2RkLxvHrzO0Cu5sVi
 spring.social.twitter.appSecret: UbOselGMS6lmGQrey3NsjxO231UzWfOG8akh7Nhc6wbbxtBMQE
 
-
+logging:
+  level:
+    ROOT: DEBUG

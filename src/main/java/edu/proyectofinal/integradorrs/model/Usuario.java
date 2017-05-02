@@ -51,6 +51,21 @@ public class Usuario {
 
     }
 
+    
+    public Usuario(Usuario u) {
+        super();
+        this.id = u.getId();
+        this.email = u.getEmail();
+        this.clave = u.getClave();
+        this.creationDate = u.getCreationDate();
+        this.telefono = u.getTelefono();
+        this.fechaNacimiento = u.getFechaNacimiento();
+        this.pais = u.getPais();
+        this.provincia = u.getProvincia();
+        this.ciudad = u.getCiudad();
+        this.calle = u.getCalle();
+    }
+    
     public String getId() {
         return id;
     }
