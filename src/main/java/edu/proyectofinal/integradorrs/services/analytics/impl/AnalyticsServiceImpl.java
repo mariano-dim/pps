@@ -161,7 +161,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             anUH.setTexto(anUpdate.getTexto());
             anUH.setcreationdate(anUpdate.getCreationDate());
             anUH.setcomments(anUpdate.getcomments());
-            //anUH.setid(anUpdate.getid());
+            anUH.setid(anUpdate.getid());
             anUH.setlikes(anUpdate.getlikes());
             anUH.setshares(anUpdate.getshares());
             updateshistoryrepository.save(anUH);

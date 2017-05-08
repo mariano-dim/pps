@@ -77,17 +77,17 @@ public class WallServiceImpl implements WallService {
            anUpdate.setTexto(aFBPost.getMessage());
            anUpdate.setcreationdate(aFBPost.getCreatedTime());
            anUpdate.setid(aFBPost.getId());
-           if(aFBPost.getComments().getCount() == null)
+           if(aFBPost.getComments() == null)
            {
             anUpdate.setcomments(0);
            }else{
-                anUpdate.setcomments(aFBPost.getComments().getCount());
+                anUpdate.setcomments(aFBPost.getComments().size());
            }
-           if(aFBPost.getLikes().getCount() == null)
+           if(aFBPost.getLikes() == null)
            {              
                anUpdate.setlikes(0);
            }else{
-               anUpdate.setlikes(aFBPost.getLikes().getCount());
+               anUpdate.setlikes(aFBPost.getLikes().size());
            }
            if(aFBPost.getSharesCount() == null)
            {

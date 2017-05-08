@@ -38,6 +38,8 @@ public class UpdateHistory implements Comparable<UpdateHistory> {
     @Field
     private String id;
     @Field
+    private String post;
+    @Field
     private int likes;
     @Field
     private int shares;
@@ -49,7 +51,7 @@ public class UpdateHistory implements Comparable<UpdateHistory> {
     }
     
     public String getid() {
-        return id;
+        return post;
     }
     
      public int getlikes() {
@@ -72,7 +74,7 @@ public class UpdateHistory implements Comparable<UpdateHistory> {
      * @param email the email to set
      */
     public void setid(String id) {
-        this.id = id;
+        this.post = id;
     }
     
      public void setcreationdate(Date creationDate) {

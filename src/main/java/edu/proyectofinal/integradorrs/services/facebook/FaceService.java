@@ -21,10 +21,14 @@ public interface FaceService {
     ResponseList <facebook4j.Post> getAllPost(String email);
 
     ResponseList <facebook4j.Post> getUserTimeline(String email);
-
+    
+    Collection <Update> getUserTimelinev2(String email);
+    
     public String Post(String email, String texto);
     
     Post GetById(String id, String email);
+    
+    Update GetByIdv2(String id, String email);
     
     Collection<Update> ToUpdateCollection(Collection<facebook4j.Post> aCollection);
     
