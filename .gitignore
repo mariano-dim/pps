@@ -8,4 +8,4 @@ Servers/
 target/
 *.class
 *.eml
-
+*.log
