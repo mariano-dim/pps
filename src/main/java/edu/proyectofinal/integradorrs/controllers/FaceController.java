@@ -36,6 +36,19 @@ public class FaceController extends AbstractController<Status> {
     private FaceService faceService;
     
 
+    @RequestMapping(method = RequestMethod.GET, value="/Prueba")
+    public ResponseEntity<ResponseList<facebook4j.Post>> getUserTimeline() {
+
+        System.out.println("Obtener posteos propios");
+        System.out.println("Prueba");
+
+        Collection<Update> StatusP = faceService.getUserTimelinev2("damian@prueba.com");
+        ResponseList<facebook4j.Post> Status = faceService.getAllPost("damian@prueba.com");
+
+        return super.collectionResult(Status);
+
+    }
+    
     @RequestMapping(method = RequestMethod.GET, value="/email/{email:.+}")
     public ResponseEntity<ResponseList<facebook4j.Post>> getTimeline(@Validated @PathVariable("email") String email) {
 
