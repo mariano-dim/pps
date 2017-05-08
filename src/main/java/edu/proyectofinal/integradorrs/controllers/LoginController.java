@@ -8,16 +8,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.proyectofinal.integradorrs.model.Usuario;
+import edu.proyectofinal.integradorrs.services.Email.EmailServiceSocialFocus;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
 import edu.proyectofinal.integradorrs.model.Token;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 
@@ -28,6 +30,10 @@ public class LoginController extends AbstractController<Usuario> {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    public EmailServiceSocialFocus emailService;
+    
+    
     @RequestMapping(method = RequestMethod.GET, value="/")
     public ResponseEntity<Collection<Usuario>> getAll() {
 
@@ -150,7 +156,7 @@ public class LoginController extends AbstractController<Usuario> {
 	@RequestMapping(method = RequestMethod.PATCH, 
 			        value = "/edit/email/{email:.+}")
 	public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
-			@RequestBody Usuario usuariop) {
+			@RequestBody Usuario usuariop) throws UnsupportedEncodingException {
 
 		System.out.println("patchUsuario");
 		System.out.println("email" + email);
@@ -166,7 +172,14 @@ public class LoginController extends AbstractController<Usuario> {
 			throw new EmptyResultException(Usuario.class);
 		}
 
-		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	}
+		// Enviandpo email de prueba
+		// En caso de fallar el email se pierde
+		emailService.sendEmailWithoutTemplating();
+		
+		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	
+	}
      
+
+	
     
 }
