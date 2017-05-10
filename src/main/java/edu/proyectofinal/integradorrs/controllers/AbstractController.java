@@ -1,5 +1,6 @@
 package edu.proyectofinal.integradorrs.controllers;
 
+import edu.proyectofinal.integradorrs.model.Dashboard;
 import edu.proyectofinal.integradorrs.model.Token;
 import edu.proyectofinal.integradorrs.model.UnifiedUpdate;
 import edu.proyectofinal.integradorrs.model.Update;
@@ -72,6 +73,11 @@ public class AbstractController<T > {
     ResponseEntity<Update> collectionResult(Update Status) {
         HttpHeaders httpHeaders = buildHeaders();
         return new ResponseEntity<Update>(Status, httpHeaders, HttpStatus.OK);    
+    }
+
+    ResponseEntity<Dashboard> Result(Dashboard aDB) {
+        HttpHeaders httpHeaders = buildHeaders();
+        return new ResponseEntity<Dashboard>(aDB, httpHeaders, HttpStatus.OK);
     }
 
 }
