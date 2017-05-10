@@ -23,5 +23,6 @@ public interface TweetsService {
 
     public int GetFollowers(String email);
     
+    public int GetFollows(String email);    
 }
 

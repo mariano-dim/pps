@@ -28,5 +28,6 @@ public interface UsuarioService {
 	Token deleteToken(String email, String rs);
 	
 	Usuario patch(Usuario usuariop, String email);
+        
 
 }

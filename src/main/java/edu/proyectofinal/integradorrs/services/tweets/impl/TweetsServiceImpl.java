@@ -155,5 +155,20 @@ public class TweetsServiceImpl implements TweetsService {
         
     }
 
+    @Override
+    public int GetFollows(String email) {
+        TwitterCredentials tc = TwitterCredentials.getInstance();
+        ConfigurationBuilder cb = tc.GetCredentials(email);
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
+        int Followers = -1;
+        try {
+            Followers = twitter.friendsFollowers().getFriendsIDs(Long.MAX_VALUE).getIDs().length;
+        } catch (TwitterException ex) {
+            Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Followers;
+    }
+
     
 }

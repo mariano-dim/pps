@@ -19,66 +19,121 @@ public class Dashboard {
     @Field
     private Date creationDate;
     @Field
-    private Double z01;
+    private Double z01_t;
     @Field
-    private Double z02;
+    private Double z02_t;
     @Field
-    private Double z03;
+    private Double z03_t;
     @Field
-    private Double z04;
+    private Double z04_t;
     @Field
-    private Double z05;
+    private Double z05_t;
+    @Field
+    private Double z01_f;
+    @Field
+    private Double z02_f;
+    @Field
+    private Double z03_f;
+    @Field
+    private Double z04_f;
+    @Field
+    private Double z05_f;
 
     public Dashboard() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR_OF_DAY, -3);
         this.creationDate= cal.getTime();
-        this.z01 = 0.00;
-        this.z02 = 0.00;
-        this.z03 = 0.00;
-        this.z04 = 0.00;
-        this.z05 = 0.00;
+        this.z01_f = 0.00;
+        this.z02_f = 0.00;
+        this.z03_f = 0.00;
+        this.z04_f = 0.00;
+        this.z05_f = 0.00;
+        this.z01_t = 0.00;
+        this.z02_t = 0.00;
+        this.z03_t = 0.00;
+        this.z04_t = 0.00;
+        this.z05_t = 0.00;
         
     }
-
-    public Double getZ01() {
-        return z01;
+    
+    public Double getZ01_t() {
+        return z01_t;
     }
 
-    public void setZ01(Double z01) {
-        this.z01 = z01;
+    public void setZ01_t(Double z01_t) {
+        this.z01_t = z01_t;
     }
 
-    public Double getZ02() {
-        return z02;
+    public Double getZ02_t() {
+        return z02_t;
     }
 
-    public void setZ02(Double z02) {
-        this.z02 = z02;
+    public void setZ02_t(Double z02_t) {
+        this.z02_t = z02_t;
     }
 
-    public Double getZ03() {
-        return z03;
+    public Double getZ03_t() {
+        return z03_t;
     }
 
-    public void setZ03(Double z03) {
-        this.z03 = z03;
+    public void setZ03_t(Double z03_t) {
+        this.z03_t = z03_t;
     }
 
-    public Double getZ04() {
-        return z04;
+    public Double getZ04_t() {
+        return z04_t;
     }
 
-    public void setZ04(Double z04) {
-        this.z04 = z04;
+    public void setZ04_t(Double z04_t) {
+        this.z04_t = z04_t;
     }
 
-    public Double getZ05() {
-        return z05;
+    public Double getZ05_t() {
+        return z05_t;
     }
 
-    public void setZ05(Double z05) {
-        this.z05 = z05;
+    public void setZ05_t(Double z05_t) {
+        this.z05_t = z05_t;
+    }
+
+    public Double getZ01_f() {
+        return z01_f;
+    }
+
+    public void setZ01(Double z01_f) {
+        this.z01_f = z01_f;
+    }
+
+    public Double getZ02_f() {
+        return z02_f;
+    }
+
+    public void setZ02(Double z02_f) {
+        this.z02_f = z02_f;
+    }
+
+    public Double getZ03_f() {
+        return z03_f;
+    }
+
+    public void setZ03(Double z03_f) {
+        this.z03_f = z03_f;
+    }
+
+    public Double getZ04_f() {
+        return z04_f;
+    }
+
+    public void setZ04(Double z04_f) {
+        this.z04_f = z04_f;
+    }
+
+    public Double getZ05_f() {
+        return z05_f;
+    }
+
+    public void setZ05(Double z05_f) {
+        this.z05_f = z05_f;
     }
     
     

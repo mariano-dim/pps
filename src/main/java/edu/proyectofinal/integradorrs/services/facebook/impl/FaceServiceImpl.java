@@ -147,7 +147,7 @@ public class FaceServiceImpl implements FaceService {
         facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
         int Followers = -1;
         try {
-            Followers = facebook.getFriendlists().size();
+            Followers = facebook.getFriends().size();
         } catch (FacebookException ex) {
             Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,6 +166,18 @@ public class FaceServiceImpl implements FaceService {
     @Override
     public Update GetByIdv2(String id, String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int GetFollows(String email) {
+        facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
+        int Followers = -1;
+        try {
+            Followers = facebook.getSubscribers().size();
+        } catch (FacebookException ex) {
+            Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Followers;
     }
     
 }

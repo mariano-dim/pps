@@ -38,4 +38,6 @@ public interface FaceService {
 
     public int GetFollowers(String email);
     
+    public int GetFollows(String email);
+    
 }

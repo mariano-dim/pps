@@ -172,13 +172,19 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     @Override
     public Dashboard getDashboard(String email, Date Desde, Date Hasta) {
         Dashboard aDB = new Dashboard();
-        Double stdrDouble = 0.00;
+        int aux = 0;
         
-        aDB.setZ01(stdrDouble);
-        aDB.setZ02(stdrDouble);
-        aDB.setZ03(stdrDouble);
-        aDB.setZ04(stdrDouble);
-        aDB.setZ05(stdrDouble);
+        aux = facebookservice.GetFollows(email);
+        if(aux != 0)
+        {
+            aDB.setZ01((double)facebookservice.GetFollowers(email)/aux);
+        }
+        aux = twitterservice.GetFollows(email);
+        if(aux != 0)
+        {
+            aDB.setZ01_t((double)twitterservice.GetFollowers(email)/aux);
+        }
+        
         
         return aDB;
     }
