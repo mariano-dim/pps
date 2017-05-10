@@ -35,6 +35,18 @@ import org.springframework.http.MediaType;
 import org.springframework.social.facebook.api.Facebook;
 import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
 import facebook4j.Reading;
+import facebook4j.internal.org.json.JSONArray;
+import facebook4j.internal.org.json.JSONException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import org.springframework.web.client.RestTemplate;
+import twitter4j.JSONObject;
 
 
 /**
@@ -65,16 +77,17 @@ public class FaceServiceImpl implements FaceService {
 
     @Override
     public ResponseList <facebook4j.Post> getUserTimeline(String email) {
-        ResponseList<facebook4j.Post> result = null;
-        facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
-        try {
-            result = facebook.getPosts(new Reading().limit(100));
-        } catch (FacebookException ex) {
-            System.out.println(ex);
-           //Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null,ex);
-        }
         
-        return result;
+            ResponseList<facebook4j.Post> result = null;
+            facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
+            try {
+                result = facebook.getPosts(new Reading().limit(100));
+            } catch (FacebookException ex) {
+                System.out.println(ex);
+                //Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null,ex);
+            }
+            
+            return result;
     }
 
     @Override
@@ -145,4 +158,14 @@ public class FaceServiceImpl implements FaceService {
     public Collection<Update> ToUpdateCollection(Collection<facebook4j.Post> aCollection) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Collection<Update> getUserTimelinev2(String email) {
+         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    @Override
+    public Update GetByIdv2(String id, String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

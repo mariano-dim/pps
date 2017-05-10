@@ -1,0 +1,23 @@
+FakeSMTP Server (Se utiliza para simular un servidor SMTP)
+emailsUser: testsocialfocus
+password: user123social
+
+localhost/puerto 2525
+http://nilhcem.com/FakeSMTP/#
+
+Para el envio de emails desde Java utilizamos
+https://github.com/ozimov/spring-boot-email-tools
+
+Pasos a ralizar
+}
+1) Primero se debe levantar el FakeSMTP
+
+java -jar fakeSMTP-2.0.jar -o . -p 2525
+
+
+2) Para probar el ejemplo, ejecutar unnm update de la pw
+
+
+curl -i -X PATCH -H "Content-Type:application/json" -d'{"email":"damian.rivas@gmail.com", "clave":"user124"}' http://localhost:8080/api/usuario/edit/email/damian.rivas@gmail.com
+
+
