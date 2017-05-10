@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.proyectofinal.integradorrs.configurations.TwitterCredentials;
+import edu.proyectofinal.integradorrs.model.Dashboard;
 import edu.proyectofinal.integradorrs.model.Favorite;
 import edu.proyectofinal.integradorrs.model.FollowersHistory;
 import edu.proyectofinal.integradorrs.model.Post;
@@ -166,5 +167,19 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             anUH.setshares(anUpdate.getshares());
             updateshistoryrepository.save(anUH);
         }
+    }
+
+    @Override
+    public Dashboard getDashboard(String email, Date Desde, Date Hasta) {
+        Dashboard aDB = new Dashboard();
+        Double stdrDouble = 0.00;
+        
+        aDB.setZ01(stdrDouble);
+        aDB.setZ02(stdrDouble);
+        aDB.setZ03(stdrDouble);
+        aDB.setZ04(stdrDouble);
+        aDB.setZ05(stdrDouble);
+        
+        return aDB;
     }
 }

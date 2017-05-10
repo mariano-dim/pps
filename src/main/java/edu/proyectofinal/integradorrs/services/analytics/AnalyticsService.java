@@ -5,10 +5,12 @@
  */
 package edu.proyectofinal.integradorrs.services.analytics;
 
+import edu.proyectofinal.integradorrs.model.Dashboard;
 import edu.proyectofinal.integradorrs.services.facebook.*;
 import edu.proyectofinal.integradorrs.model.Update;
 import facebook4j.ResponseList;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -23,5 +25,7 @@ public interface AnalyticsService {
       void SaveFollowers();
       
       void SaveUpdatesHistory();
+
+    public Dashboard getDashboard(String email, Date Desde, Date Hasta);
     
 }
