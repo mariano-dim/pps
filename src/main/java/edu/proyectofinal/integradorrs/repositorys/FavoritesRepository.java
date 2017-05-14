@@ -20,10 +20,11 @@ public interface FavoritesRepository extends MongoRepository<Favorite, String> {
    
       /**
      *
-     * @param email,id_update
+     * @param email
+     * @param id_update
      * @return
      */
-    @Query("{ 'email' : ?0,'id_update': ?1 }")
+    @Query("{ 'email' : ?0, 'id_update': ?1 }")
     public Favorite findByID(String email, String id_update);
     
      /**
