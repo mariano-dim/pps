@@ -173,7 +173,7 @@ public class FaceServiceImpl implements FaceService {
         facebook4j.Facebook facebook = FacebookCredentials.getInstance().SetCredentials(email);
         int Followers = -1;
         try {
-            Followers = facebook.getSubscribers().size();
+            Followers = facebook.getFriends().size();
         } catch (FacebookException ex) {
             Logger.getLogger(FaceServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

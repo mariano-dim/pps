@@ -46,8 +46,10 @@ import edu.proyectofinal.integradorrs.repositorys.UpdatesRepository;
 import edu.proyectofinal.integradorrs.services.analytics.AnalyticsService;
 import edu.proyectofinal.integradorrs.services.favorites.FavoriteService;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import twitter4j.Status;
 
 
@@ -169,22 +171,123 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         }
     }
 
+    /**
+     *
+     * @param email
+     * @param Desde
+     * @param Hasta
+     * @return
+     * @throws ParseException
+     */
     @Override
-    public Dashboard getDashboard(String email, Date Desde, Date Hasta) {
+    public Dashboard getDashboard(String email, Date Desde, Date Hasta){
         Dashboard aDB = new Dashboard();
         int aux = 0;
+        int counterComments = 0;
+        int counterShares = 0;
+        int likescount = 0;
+        Collection<String> usersInteract = new ArrayList<String>();
+        Collection<facebook4j.Post>  aFacebookPosts = facebookservice.getUserTimeline(email);
+        Collection<twitter4j.Status> aTwitterPosts  = twitterservice.getUserTimeline(email);
+        aFacebookPosts.removeIf(p-> (p.getCreatedTime().compareTo(Desde) <0 || p.getCreatedTime().compareTo(Hasta)>0));
+        aTwitterPosts.removeIf(s-> (s.getCreatedAt().compareTo(Desde) < 0 || s.getCreatedAt().compareTo(Hasta) > 0));
+        
         
         aux = facebookservice.GetFollows(email);
         if(aux != 0)
         {
-            aDB.setZ01((double)facebookservice.GetFollowers(email)/aux);
+            try {
+                aDB.setZ01((double)facebookservice.GetFollowers(email)/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         aux = twitterservice.GetFollows(email);
         if(aux != 0)
         {
-            aDB.setZ01_t((double)twitterservice.GetFollowers(email)/aux);
+            try {
+                aDB.setZ01_t((double)twitterservice.GetFollowers(email)/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+        aux = aFacebookPosts.size();
+        if(aux != 0)
+        {
+            for(facebook4j.Post aFBpost :aFacebookPosts)
+            {
+                counterComments = counterComments + aFBpost.getComments().size();
+                if(aFBpost.getSharesCount() != null)
+                {
+                    counterShares = counterShares + aFBpost.getSharesCount();
+                }
+                if(aFBpost.getLikes() != null)
+                {
+                    likescount = aFBpost.getLikes().size();
+                }
+                for(facebook4j.Comment aPostComment: aFBpost.getComments())
+                {
+                    if(!usersInteract.contains(aPostComment.getId()))
+                    {
+                        usersInteract.add(aPostComment.getId());
+                    }
+                }
+            }
+            try {
+                aDB.setZ02((double) usersInteract.size()+likescount);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ03((double) counterComments/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ04((double) counterShares/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ05((double) 100*(aDB.getZ02_f() / facebookservice.GetFollowers(email) ));
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            counterComments = 0;
+            counterShares = 0;
+            likescount = 0;
+            usersInteract.clear();
+        }        
+        aux = aTwitterPosts.size();
+        if(aux != 0)
+        {
+            for(twitter4j.Status aTWstatus: aTwitterPosts)
+            {
+                counterComments = counterComments + aTWstatus.getUserMentionEntities().length;
+                counterShares = counterShares + aTWstatus.getRetweetCount();
+                likescount = likescount + aTWstatus.getFavoriteCount();
+            }
+            try {
+                aDB.setZ02_t((double) likescount + counterShares);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ03_t((double) counterComments/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ04_t((double) counterShares/aux);
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                aDB.setZ05_t((double) 100*(aDB.getZ02_t() / twitterservice.GetFollowers(email)));
+            } catch (ParseException ex) {
+                Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         return aDB;
     }

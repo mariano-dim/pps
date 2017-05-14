@@ -5,6 +5,8 @@
  */
 package edu.proyectofinal.integradorrs.model;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
@@ -15,6 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * @author SocialFocus
  */
 public class Dashboard {
+
+    public static final DecimalFormat df = new DecimalFormat("0.00");
 
     @Field
     private Date creationDate;
@@ -60,7 +64,7 @@ public class Dashboard {
         return z01_t;
     }
 
-    public void setZ01_t(Double z01_t) {
+    public void setZ01_t(Double z01_t) throws ParseException {
         this.z01_t = z01_t;
     }
 
@@ -68,7 +72,7 @@ public class Dashboard {
         return z02_t;
     }
 
-    public void setZ02_t(Double z02_t) {
+    public void setZ02_t(Double z02_t) throws ParseException {
         this.z02_t = z02_t;
     }
 
@@ -76,7 +80,7 @@ public class Dashboard {
         return z03_t;
     }
 
-    public void setZ03_t(Double z03_t) {
+    public void setZ03_t(Double z03_t) throws ParseException {
         this.z03_t = z03_t;
     }
 
@@ -84,7 +88,7 @@ public class Dashboard {
         return z04_t;
     }
 
-    public void setZ04_t(Double z04_t) {
+    public void setZ04_t(Double z04_t) throws ParseException {
         this.z04_t = z04_t;
     }
 
@@ -92,7 +96,7 @@ public class Dashboard {
         return z05_t;
     }
 
-    public void setZ05_t(Double z05_t) {
+    public void setZ05_t(Double z05_t) throws ParseException {
         this.z05_t = z05_t;
     }
 
@@ -100,7 +104,7 @@ public class Dashboard {
         return z01_f;
     }
 
-    public void setZ01(Double z01_f) {
+    public void setZ01(Double z01_f) throws ParseException {
         this.z01_f = z01_f;
     }
 
@@ -108,7 +112,7 @@ public class Dashboard {
         return z02_f;
     }
 
-    public void setZ02(Double z02_f) {
+    public void setZ02(Double z02_f) throws ParseException {
         this.z02_f = z02_f;
     }
 
@@ -116,7 +120,7 @@ public class Dashboard {
         return z03_f;
     }
 
-    public void setZ03(Double z03_f) {
+    public void setZ03(Double z03_f) throws ParseException {
         this.z03_f = z03_f;
     }
 
@@ -124,7 +128,7 @@ public class Dashboard {
         return z04_f;
     }
 
-    public void setZ04(Double z04_f) {
+    public void setZ04(Double z04_f) throws ParseException {
         this.z04_f = z04_f;
     }
 
@@ -132,8 +136,12 @@ public class Dashboard {
         return z05_f;
     }
 
-    public void setZ05(Double z05_f) {
+    public void setZ05(Double z05_f) throws ParseException {
         this.z05_f = z05_f;
+    }
+
+    public void getZ03_f(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

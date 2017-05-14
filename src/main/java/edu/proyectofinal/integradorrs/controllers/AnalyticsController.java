@@ -41,16 +41,24 @@ public class AnalyticsController extends AbstractController<Dashboard> {
     @RequestMapping(method = RequestMethod.GET, value="/dashboard/{email:.+}")
     public ResponseEntity<Dashboard> getDashBoard(@Validated @PathVariable("email") String email
             , String fechaDesde, String fechaHasta) throws ParseException { 
-
+        
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd mm:ss");
         System.out.println("Dashboard de actividad Social Focus");
         Dashboard aDB = new Dashboard();
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd mm:ss");
+        //Timestamp desdeT = new Timestamp(System.currentTimeMillis()-100000); 
+        //Timestamp hastaT = new Timestamp(System.currentTimeMillis());
+        String desdeT = "2017-04-01 11:12:47";
+        String hastaT = "2017-05-14 11:12:47";
+        Date desde = toDate(Timestamp.valueOf(desdeT));
+        Date hasta = toDate(Timestamp.valueOf(hastaT));
         try{
-        aDB = analyticsService.getDashboard(email, format.parse(fechaDesde) , format.parse(fechaHasta));
+        aDB = analyticsService.getDashboard(email, desde , hasta);
+        
         }catch(Exception ex)
         {
             System.out.println(ex.getMessage());
         }
+        
         return super.Result(aDB);
     }
     
