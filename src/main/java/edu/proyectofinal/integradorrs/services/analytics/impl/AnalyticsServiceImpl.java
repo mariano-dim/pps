@@ -249,7 +249,14 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                aDB.setZ05((double) 100*(aDB.getZ02_f() / facebookservice.GetFollowers(email) ));
+                aux = facebookservice.GetFollowers(email) ;
+                if (aux != 0)
+                {
+                    aDB.setZ05((double) 100*(aDB.getZ02_f() / aux ));
+                }else
+                {
+                   aDB.setZ05(0.00);
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -283,7 +290,14 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                aDB.setZ05_t((double) 100*(aDB.getZ02_t() / twitterservice.GetFollowers(email)));
+                aux = twitterservice.GetFollowers(email);
+                if(aux != 0)
+                {
+                    aDB.setZ05_t((double) 100*(aDB.getZ02_t() / aux ));
+                }else
+                {
+                    aDB.setZ05_t(0.00);
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(AnalyticsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

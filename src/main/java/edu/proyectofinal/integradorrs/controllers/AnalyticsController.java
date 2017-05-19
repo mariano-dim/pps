@@ -47,10 +47,10 @@ public class AnalyticsController extends AbstractController<Dashboard> {
         Dashboard aDB = new Dashboard();
         //Timestamp desdeT = new Timestamp(System.currentTimeMillis()-100000); 
         //Timestamp hastaT = new Timestamp(System.currentTimeMillis());
-        String desdeT = "2017-04-01 11:12:47";
-        String hastaT = "2017-05-14 11:12:47";
-        Date desde = toDate(Timestamp.valueOf(desdeT));
-        Date hasta = toDate(Timestamp.valueOf(hastaT));
+        //String desdeT = "2017-04-01 11:12:47";
+        //String hastaT = "2017-05-14 11:12:47";
+        Date desde = toDate(Timestamp.valueOf(fechaDesde.replace("_", " ")));
+        Date hasta = toDate(Timestamp.valueOf(fechaHasta.replace("_", " ")));
         try{
         aDB = analyticsService.getDashboard(email, desde , hasta);
         
