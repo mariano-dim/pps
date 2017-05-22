@@ -112,13 +112,19 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>12.0</version>
+            <version>21.0</version>
         </dependency>
         <dependency>
             <groupId>it.ozimov</groupId>
-            <artifactId>spring-boot-email-core</artifactId>
+            <artifactId>spring-boot-freemarker-email</artifactId>
             <version>0.6.2</version>
-        </dependency>            
+        </dependency>
+
+<!--         <dependency> -->
+<!--             <groupId>it.ozimov</groupId> -->
+<!--             <artifactId>spring-boot-email-core</artifactId> -->
+<!--             <version>0.6.2</version> -->
+<!--         </dependency>             -->
 <!--         <dependency> -->
 <!-- 	        <groupId>it.ozimov</groupId> -->
 <!-- 	        <artifactId>spring-boot-freemarker-email</artifactId> -->

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.proyectofinal.integradorrs.model.Usuario;
 import edu.proyectofinal.integradorrs.services.Email.EmailServiceSocialFocus;
 import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
+import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
 import edu.proyectofinal.integradorrs.model.Token;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import org.springframework.http.HttpHeaders;
 
@@ -154,12 +156,19 @@ public class LoginController extends AbstractController<Usuario> {
      
      
 	@RequestMapping(method = RequestMethod.PATCH, 
-			        value = "/edit/email/{email:.+}")
-	public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
-			@RequestBody Usuario usuariop) throws UnsupportedEncodingException {
+			        value = "/email/modify/{email:.+}")
+	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email,
+			@RequestBody Usuario usuariop) 
+		throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
-		System.out.println("patchUsuario");
+		System.out.println("patchUsuarioChangePW");
 		System.out.println("email" + email);
+		
+		/**
+		 * El usuario original es para envarle una notificacion al mismo, antes
+		 * de que hayan sido modificados los datos
+		 */
+		Usuario usuarioDBOriginal = usuarioService.getByEmail(email);
 		
 		Usuario usuario = usuarioService.patch(usuariop, email);
 
@@ -168,18 +177,48 @@ public class LoginController extends AbstractController<Usuario> {
 
 		Usuario usuarioDB = usuarioService.getByEmail(email);
 		
+		/**
+		 * Esto es para retornar los datos del usuario ya modificados
+		 */
+		if (null == usuarioDB) {
+			throw new EmptyResultException(Usuario.class);
+		}
+
+		/**
+		 *  Enviando email de prueba En caso de fallar el email se pierde
+		 *  Es importante agregar el nombre y apellido del usuario al codigo
+		 */
+		emailService.sendEmailChangePassword(usuarioDBOriginal.getEmail(),"Cambiaste tu password, en caso de no ser el caso por favor contactanos");
+
+		
+		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	
+	}
+     
+
+	@RequestMapping(method = RequestMethod.PATCH, value = "/email/temp{email:.+}")
+	public ResponseEntity<Usuario> patchUsuarioPWChanged(@Validated @PathVariable("email") String email,
+			@RequestBody Usuario usuariop) throws UnsupportedEncodingException {
+
+		System.out.println("patchUsuario");
+		System.out.println("email" + email);
+
+		Usuario usuario = usuarioService.patch(usuariop, email);
+
+		// En el caso que se requiera pasar algo en el Header
+		HttpHeaders headers = new HttpHeaders();
+
+		Usuario usuarioDB = usuarioService.getByEmail(email);
+
 		if (null == usuarioDB) {
 			throw new EmptyResultException(Usuario.class);
 		}
 
 		// Enviandpo email de prueba
 		// En caso de fallar el email se pierde
-		emailService.sendEmailWithoutTemplating();
-		
-		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	
-	}
-     
+		emailService.sendEmailChangePWSuccessfully("", "", "");
 
+		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);
+	}
 	
     
 }
