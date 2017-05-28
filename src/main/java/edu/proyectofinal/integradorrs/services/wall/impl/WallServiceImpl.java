@@ -70,47 +70,53 @@ public class WallServiceImpl implements WallService {
        Collection<facebook4j.Post>  aFacebookPosts = facebookservice.getUserTimeline(email);
        Collection<twitter4j.Status> aTwitterPosts  = twitterservice.getUserTimeline(email);
        
-       for(facebook4j.Post aFBPost: aFacebookPosts)
+       if(aFacebookPosts != null)
        {
-           anUpdate.setEmail(email);
-           anUpdate.setSocialnetwork("Facebook");
-           anUpdate.setTexto(aFBPost.getMessage());
-           anUpdate.setcreationdate(aFBPost.getCreatedTime());
-           anUpdate.setid(aFBPost.getId());
-           if(aFBPost.getComments() == null)
-           {
-            anUpdate.setcomments(0);
-           }else{
-                anUpdate.setcomments(aFBPost.getComments().size());
-           }
-           if(aFBPost.getLikes() == null)
-           {              
-               anUpdate.setlikes(0);
-           }else{
-               anUpdate.setlikes(aFBPost.getLikes().size());
-           }
-           if(aFBPost.getSharesCount() == null)
-           {
-                anUpdate.setshares(0);
-           }else
-           {
-              anUpdate.setshares(aFBPost.getSharesCount());
-           }
-           anUpdates.add(anUpdate);
-           anUpdate = new Update();
+            for(facebook4j.Post aFBPost: aFacebookPosts)
+            {
+                anUpdate.setEmail(email);
+                anUpdate.setSocialnetwork("Facebook");
+                anUpdate.setTexto(aFBPost.getMessage());
+                anUpdate.setcreationdate(aFBPost.getCreatedTime());
+                anUpdate.setid(aFBPost.getId());
+                if(aFBPost.getComments() == null)
+                {
+                 anUpdate.setcomments(0);
+                }else{
+                     anUpdate.setcomments(aFBPost.getComments().size());
+                }
+                if(aFBPost.getLikes() == null)
+                {              
+                    anUpdate.setlikes(0);
+                }else{
+                    anUpdate.setlikes(aFBPost.getLikes().size());
+                }
+                if(aFBPost.getSharesCount() == null)
+                {
+                     anUpdate.setshares(0);
+                }else
+                {
+                   anUpdate.setshares(aFBPost.getSharesCount());
+                }
+                anUpdates.add(anUpdate);
+                anUpdate = new Update();
+            }
        }
-       for(twitter4j.Status aTWPost: aTwitterPosts)
+       if(aTwitterPosts != null)
        {
-           anUpdate.setEmail(email);
-           anUpdate.setSocialnetwork("Twitter");
-           anUpdate.setTexto(aTWPost.getText());
-           anUpdate.setcreationdate(aTWPost.getCreatedAt());
-           anUpdate.setid(String.valueOf(aTWPost.getId()));
-           anUpdate.setcomments(aTWPost.getUserMentionEntities().length);
-           anUpdate.setlikes(aTWPost.getFavoriteCount());
-           anUpdate.setshares(aTWPost.getRetweetCount());
-           anUpdates.add(anUpdate);
-           anUpdate = new Update();
+            for(twitter4j.Status aTWPost: aTwitterPosts)
+            {
+                anUpdate.setEmail(email);
+                anUpdate.setSocialnetwork("Twitter");
+                anUpdate.setTexto(aTWPost.getText());
+                anUpdate.setcreationdate(aTWPost.getCreatedAt());
+                anUpdate.setid(String.valueOf(aTWPost.getId()));
+                anUpdate.setcomments(aTWPost.getUserMentionEntities().length);
+                anUpdate.setlikes(aTWPost.getFavoriteCount());
+                anUpdate.setshares(aTWPost.getRetweetCount());
+                anUpdates.add(anUpdate);
+                anUpdate = new Update();
+            }
        }
        Collections.sort(anUpdates);
        

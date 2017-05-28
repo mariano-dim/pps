@@ -148,26 +148,36 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         String SocialNetwork;
         Update anUpdate;
         Collection<Favorite> favorites = favoriteService.getAllFavorite();
-        for(Favorite aFavorite: favorites)
+        Collection<Update> aPosts = updatesrepository.findAll();
+        for(Update aPost: aPosts)
         {
-            if(aFavorite.getSocialnetwork().equals("Facebook"))
+            anUpdate = null;
+            try{
+                if(aPost.getSocialnetwork().equals("Facebook"))
+                {
+                    anUpdate = Adapter.FacebookPostToUpdate(aPost.getEmail(), (facebookservice.GetById(aPost.getid(), aPost.getEmail())));       
+                }
+                else
+                {
+                    anUpdate = Adapter.TwitterStatusToUpdate(aPost.getEmail(), twitterservice.GetById(aPost.getid(), aPost.getEmail()));
+                }
+            }catch(Exception ex)
             {
-                anUpdate = Adapter.FacebookPostToUpdate(aFavorite.getEmail(), (facebookservice.GetById(aFavorite.getId_update(), aFavorite.getEmail())));       
+                System.out.println(ex.getMessage());
             }
-            else
+            if(anUpdate != null)
             {
-                anUpdate = Adapter.TwitterStatusToUpdate(aFavorite.getEmail(), twitterservice.GetById(aFavorite.getId_update(), aFavorite.getEmail()));
+                UpdateHistory anUH = new UpdateHistory();
+                anUH.setEmail(anUpdate.getEmail());
+                anUH.setSocialnetwork(anUpdate.getSocialnetwork());
+                anUH.setTexto(anUpdate.getTexto());
+                anUH.setcreationdate(anUpdate.getCreationDate());
+                anUH.setcomments(anUpdate.getcomments());
+                anUH.setid(anUpdate.getid());
+                anUH.setlikes(anUpdate.getlikes());
+                anUH.setshares(anUpdate.getshares());
+                updateshistoryrepository.save(anUH);
             }
-            UpdateHistory anUH = new UpdateHistory();
-            anUH.setEmail(anUpdate.getEmail());
-            anUH.setSocialnetwork(anUpdate.getSocialnetwork());
-            anUH.setTexto(anUpdate.getTexto());
-            anUH.setcreationdate(anUpdate.getCreationDate());
-            anUH.setcomments(anUpdate.getcomments());
-            anUH.setid(anUpdate.getid());
-            anUH.setlikes(anUpdate.getlikes());
-            anUH.setshares(anUpdate.getshares());
-            updateshistoryrepository.save(anUH);
         }
     }
 
