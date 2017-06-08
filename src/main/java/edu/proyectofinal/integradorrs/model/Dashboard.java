@@ -23,6 +23,10 @@ public class Dashboard {
     @Field
     private Date creationDate;
     @Field
+    private int followers_t;
+    @Field
+    private int followers_f;
+    @Field
     private Double z01_t;
     @Field
     private Double z02_t;
@@ -47,6 +51,8 @@ public class Dashboard {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.HOUR_OF_DAY, -3);
         this.creationDate= cal.getTime();
+        this.followers_f = 0;
+        this.followers_t = 0;
         this.z01_f = 0.00;
         this.z02_f = 0.00;
         this.z03_f = 0.00;
@@ -58,6 +64,23 @@ public class Dashboard {
         this.z04_t = 0.00;
         this.z05_t = 0.00;
         
+    }
+    
+    
+    public int getFollowers_t() {
+        return followers_t;
+    }
+
+    public void setFollowers_t(int followers_t) {
+        this.followers_t = followers_t;
+    }
+
+    public int getFollowers_f() {
+        return followers_f;
+    }
+
+    public void setFollowers_f(int followers_f) {
+        this.followers_f = followers_f;
     }
     
     public Double getZ01_t() {

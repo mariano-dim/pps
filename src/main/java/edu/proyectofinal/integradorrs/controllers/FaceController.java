@@ -15,7 +15,11 @@ import edu.proyectofinal.integradorrs.model.Update;
 import edu.proyectofinal.integradorrs.services.facebook.FaceService;
 import edu.proyectofinal.integradorrs.services.tweets.TweetsService;
 import facebook4j.ResponseList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -69,6 +73,23 @@ public class FaceController extends AbstractController<Status> {
 
         ResponseList<facebook4j.Post> Status = faceService.getUserTimeline(email);
 
+        return super.collectionResult(Status);
+
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value="/SelectedUserTimeline/{email:.+}")
+    public ResponseEntity<ResponseList<facebook4j.Post>> getUserTimelineDates(@Validated @PathVariable("email") String email
+    , String fechaDesde, String fechaHasta) throws ParseException {
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("Obtener posteos propios");
+        System.out.println(email);
+        Date desde = format.parse(fechaDesde.substring(6, 10) + "-" + fechaDesde.substring(3, 5)+ "-" + fechaDesde.substring(0, 2)+ " " + fechaDesde.substring(11, 16)+":00");
+        Date hasta = format.parse(fechaHasta.substring(6, 10) + "-" + fechaHasta.substring(3, 5)+ "-" + fechaHasta.substring(0, 2)+ " " + fechaHasta.substring(11, 16)+":00");
+        
+        ResponseList<facebook4j.Post> Status = faceService.getUserTimeline(email);
+        Status.removeIf(p-> (p.getCreatedTime().compareTo(desde) <0 || p.getCreatedTime().compareTo(hasta)>0));
+        
         return super.collectionResult(Status);
 
     }
