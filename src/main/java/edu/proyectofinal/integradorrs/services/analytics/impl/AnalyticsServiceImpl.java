@@ -202,7 +202,8 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         aFacebookPosts.removeIf(p-> (p.getCreatedTime().compareTo(Desde) <0 || p.getCreatedTime().compareTo(Hasta)>0));
         aTwitterPosts.removeIf(s-> (s.getCreatedAt().compareTo(Desde) < 0 || s.getCreatedAt().compareTo(Hasta) > 0));
         
-        
+        aDB.setFollowers_f(facebookservice.GetFollowers(email));
+        aDB.setFollowers_t(twitterservice.GetFollowers(email));
         aux = facebookservice.GetFollows(email);
         if(aux != 0)
         {
