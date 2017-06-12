@@ -49,6 +49,7 @@ import edu.proyectofinal.integradorrs.services.usuario.UsuarioService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import twitter4j.Status;
 
@@ -316,4 +317,21 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         
         return aDB;
     }
+
+    @Override
+    public Collection<FollowersHistory> getFollowersHistory(String Email, String SocialNetwork) {
+        
+        /*Comparator<FollowersHistory> comparator = new Comparator<FollowersHistory>() {
+        @Override
+            public int compare(FollowersHistory left, FollowersHistory right) {
+             return left.getFecharegistro().toInstant().compareTo(right.getFecharegistro().toInstant());
+         }
+        };*/
+        
+         Collection<FollowersHistory> aResult = followershistoryrepository.findByEmailandSN(Email, SocialNetwork);
+         //Collections.sort(aResult);
+         return aResult;
+    }
+
+
 }

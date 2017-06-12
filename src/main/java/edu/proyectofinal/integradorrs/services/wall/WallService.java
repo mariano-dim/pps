@@ -5,6 +5,7 @@
  */
 package edu.proyectofinal.integradorrs.services.wall;
 
+import edu.proyectofinal.integradorrs.model.FollowersHistory;
 import edu.proyectofinal.integradorrs.model.UnifiedUpdate;
 import edu.proyectofinal.integradorrs.model.Update;
 import java.util.Collection;
@@ -16,4 +17,6 @@ import java.util.Collection;
 public interface WallService {
 
      public Collection<UnifiedUpdate> getUnifiedWall(String email);    
+
+    
 }

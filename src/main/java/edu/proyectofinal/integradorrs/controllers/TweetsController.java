@@ -55,15 +55,15 @@ public class TweetsController extends AbstractController<Status> {
 
     }
     
-    @RequestMapping(method = RequestMethod.GET, value="/SelectedUserTimeline/{user:.+}")
-    public ResponseEntity<Collection<Status>> getUserTimelineDates(@Validated @PathVariable("user") String user, String email
+    @RequestMapping(method = RequestMethod.GET, value="/SelectedUserTimeline/{email:.+}")
+    public ResponseEntity<Collection<Status>> getUserTimelineDates(@Validated @PathVariable("email") String email
     , String fechaDesde, String fechaHasta) throws ParseException {
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("getAll");
         Date desde = format.parse(fechaDesde.substring(6, 10) + "-" + fechaDesde.substring(3, 5)+ "-" + fechaDesde.substring(0, 2)+ " " + fechaDesde.substring(11, 16)+":00");
         Date hasta = format.parse(fechaHasta.substring(6, 10) + "-" + fechaHasta.substring(3, 5)+ "-" + fechaHasta.substring(0, 2)+ " " + fechaHasta.substring(11, 16)+":00");
-        Collection<Status> Status = tweetsService.getUserTimeline(user, email);
+        Collection<Status> Status = tweetsService.getUserTimeline(email);
         Status.removeIf(p-> (p.getCreatedAt().compareTo(desde) <0 || p.getCreatedAt().compareTo(hasta)>0));
         
         return super.collectionResult(Status);

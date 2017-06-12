@@ -6,6 +6,7 @@
 package edu.proyectofinal.integradorrs.services.analytics;
 
 import edu.proyectofinal.integradorrs.model.Dashboard;
+import edu.proyectofinal.integradorrs.model.FollowersHistory;
 import edu.proyectofinal.integradorrs.services.facebook.*;
 import edu.proyectofinal.integradorrs.model.Update;
 import facebook4j.ResponseList;
@@ -27,5 +28,7 @@ public interface AnalyticsService {
       void SaveUpdatesHistory();
 
     public Dashboard getDashboard(String email, Date Desde, Date Hasta);
+    
+    public Collection<FollowersHistory> getFollowersHistory(String Email, String SocialNetwork);
     
 }

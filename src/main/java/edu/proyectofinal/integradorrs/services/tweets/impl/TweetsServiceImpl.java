@@ -136,9 +136,9 @@ public class TweetsServiceImpl implements TweetsService {
      TwitterFactory tf = new TwitterFactory(cb.build());
      Twitter twitter = tf.getInstance();
      List<Status> statuses = null;    
-     Paging paging = new Paging(1, 50);
+     Paging paging = new Paging(1, 100);
         try {
-            statuses = twitter.getUserTimeline();
+            statuses = twitter.getUserTimeline(paging);
         } catch (TwitterException ex) {
             Logger.getLogger(TweetsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
