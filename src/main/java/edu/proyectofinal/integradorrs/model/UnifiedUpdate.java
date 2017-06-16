@@ -22,6 +22,9 @@ public class UnifiedUpdate implements Comparable<UnifiedUpdate> {
 
     @Field
     private int favorite;
+
+    @Field
+    private int socialfocus_post;
     @Field
     private String id_tw;
     @Field
@@ -34,6 +37,15 @@ public class UnifiedUpdate implements Comparable<UnifiedUpdate> {
     private String id;
     @Field
     private int likes_fb;
+    
+    
+    public int getSocialfocus_post() {
+        return socialfocus_post;
+    }
+
+    public void setSocialfocus_post(int socialfocus_post) {
+        this.socialfocus_post = socialfocus_post;
+    }
 
     public int getLikes_fb() {
         return likes_fb;

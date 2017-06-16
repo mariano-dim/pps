@@ -51,6 +51,8 @@ public class WallServiceImpl implements WallService {
     private AnalyticsService analitycsService;
     @Autowired
     private FavoriteService favoriteService;
+    @Autowired
+    private UpdatesRepository SocialFocusPosts;
    // UpdatesSort comparator = new UpdatesSort();
     
     @Override
@@ -65,8 +67,6 @@ public class WallServiceImpl implements WallService {
              return left.getCreationDate().toInstant().compareTo(right.getCreationDate().toInstant());
          }
      };
-
-       
        Collection<facebook4j.Post>  aFacebookPosts = facebookservice.getUserTimeline(email);
        Collection<twitter4j.Status> aTwitterPosts  = twitterservice.getUserTimeline(email);
        
@@ -183,14 +183,17 @@ public class WallServiceImpl implements WallService {
             if((anUnifiedUpdate.getid_fb() != "-1")&&(anUnifiedUpdate.getid_tw() != "-1"))
             {
                 anUnifiedUpdate.setFavorite((favoriteService.IsFavorite(email, anUnifiedUpdate.getid_fb()) && (favoriteService.IsFavorite(email, anUnifiedUpdate.getid_tw()))) == true? 1:0);
+                anUnifiedUpdate.setSocialfocus_post((IsOwnPost(email,"Facebook",anUnifiedUpdate.getid_fb())&& IsOwnPost(email,"Twitter",anUnifiedUpdate.getid_tw())) == true? 1:0);
             }else
             {
                 if(anUnifiedUpdate.getid_fb() != "-1")
                 {
                     anUnifiedUpdate.setFavorite(favoriteService.IsFavorite(email, anUnifiedUpdate.getid_fb()) == true ? 1:0);
+                                    anUnifiedUpdate.setSocialfocus_post((IsOwnPost(email,"Facebook",anUnifiedUpdate.getid_fb())) == true? 1:0);
                 }else
                 {
                                         anUnifiedUpdate.setFavorite(favoriteService.IsFavorite(email, anUnifiedUpdate.getid_tw()) == true ? 1:0);
+                                                        anUnifiedUpdate.setSocialfocus_post((IsOwnPost(email,"Twitter",anUnifiedUpdate.getid_tw())) == true? 1:0);
                 }
             }
             anUnifiedUpdates.add(anUnifiedUpdate);
@@ -199,6 +202,11 @@ public class WallServiceImpl implements WallService {
        //anUnifiedUpdates = anUnifiedUpdates.subList(0, 29);
        Collections.sort(anUnifiedUpdates);
        return anUnifiedUpdates;
+    }
+    
+    private Boolean IsOwnPost(String email, String SocialNetwork, String ID)
+    {
+        return SocialFocusPosts.findByEmailandSNandID(email, SocialNetwork, ID) == null;
     }
     
 }

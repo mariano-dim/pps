@@ -157,8 +157,9 @@ public class LoginController extends AbstractController<Usuario> {
      
 	@RequestMapping(method = RequestMethod.PATCH, 
 			        value = "/email/modify/{email:.+}")
-	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email,
-			@RequestBody Usuario usuariop) 
+	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email
+                ,@RequestBody Usuario usuariop
+        ) 
 		throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
 		System.out.println("patchUsuarioChangePW");

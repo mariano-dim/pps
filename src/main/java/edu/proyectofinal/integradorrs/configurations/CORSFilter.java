@@ -41,7 +41,7 @@ public class CORSFilter implements Filter {
         }
         */
         response.setHeader("Access-Control-Allow-Origin", "*" );
-        //response.setHeader("Access-Control-Allow-Origin", "http://localhost:5000" );
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5000" );
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin, Authorization, X-Requested-With, Content-Type, Accept");

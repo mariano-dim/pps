@@ -32,9 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             /*.cors().configurationSource(source)
                 .and()*/
             .authorizeRequests()
-                //.antMatchers("http://localhost:8080/**").permitAll()
+               /*.regexMatchers(".[5000|8080].").not().authenticated()
+                .regexMatchers(".[5000|8080].").permitAll()*/
                 .anyRequest().permitAll()
-                //.anyRequest().authenticated()
                 .and()
             /*.formLogin()
                 .loginPage("/login")
