@@ -35,6 +35,14 @@ public interface UpdatesHistoryRepository extends MongoRepository<UpdateHistory,
     
     /**
      *
+     * @param email,id 
+     * @return
+     */
+    @Query("{ 'email' : ?0, 'post': ?1 }")
+    public Collection<UpdateHistory> findByEmailandID(String email, String post);
+    
+    /**
+     *
      * @param email,socialnetwork, id
      * @return
      */
