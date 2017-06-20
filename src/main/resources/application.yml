@@ -61,10 +61,10 @@ spring.mail.properties.mail.smtp.auth: true
 spring.mail.properties.mail.smtp.starttls.enable: false
 spring.mail.properties.mail.smtp.starttls.required: false
 
-spring.mail.host: localhost
-spring.mail.port: 2525
-spring.mail.username: testsocialfocus@gmail.com
-spring.mail.password: user123social
+spring.mail.host: smtp.gmail.com
+spring.mail.port: 25
+spring.mail.username: socialfocus.info@gmail.com
+spring.mail.password: unicaece
 
 
 #spring.mail.logging.enabled: true

@@ -22,9 +22,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/usuario")
 public class LoginController extends AbstractController<Usuario> {
