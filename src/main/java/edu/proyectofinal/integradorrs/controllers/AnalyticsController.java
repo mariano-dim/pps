@@ -19,7 +19,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/analytics")
 public class AnalyticsController extends AbstractController<Dashboard> {

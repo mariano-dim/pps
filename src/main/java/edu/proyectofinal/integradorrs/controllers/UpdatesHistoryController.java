@@ -22,7 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/updates/history")
 public class UpdatesHistoryController extends AbstractController<UpdateHistory> {
