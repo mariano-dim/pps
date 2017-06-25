@@ -61,10 +61,16 @@ spring.mail.properties.mail.smtp.auth: true
 spring.mail.properties.mail.smtp.starttls.enable: false
 spring.mail.properties.mail.smtp.starttls.required: false
 
-spring.mail.host: smtp.gmail.com
-spring.mail.port: 25
+spring.mail.host: localhost
+spring.mail.port: 2525
 spring.mail.username: socialfocus.info@gmail.com
 spring.mail.password: unicaece
+
+emailCustom.emailSender: "notifier@socialfocus.com.ar"
+emailCustom.emailSenderDescription: "Equipo de cuentas SocialFocus"
+emailCustom.notificationTitle: "Confirmación de seguridad de la cuenta SocialFocus"
+
+token.expiration: 1
 
 
 #spring.mail.logging.enabled: true

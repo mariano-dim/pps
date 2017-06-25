@@ -27,15 +27,22 @@ import it.ozimov.springboot.mail.model.defaultimpl.DefaultInlinePicture;
 import it.ozimov.springboot.mail.service.EmailService;
 import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class EmailServiceImpl implements EmailServiceSocialFocus {
 
 	@Autowired
 	private EmailService emailService;
-	private static final String EmailSender = "testsocialfocus@gmail.com";
-	private static final String EmailSenderDescription = "Test Social Focus Sender";
-	private static final String NotificationPWChanged = "Modificaste tu clave de Social Focus";
+
+	@Value("${emailCustom.emailSender}")
+	private String emailSender;
+
+	@Value("${emailCustom.emailSenderDescription}")
+	private String emailSenderDescription;
+
+	@Value("${emailCustom.notificationTitle}")
+	private String notificationPWChanged;
 
 	/**
 	 * Este email es para el aviso del usuario que se olvido la clave o que hace
@@ -49,8 +56,8 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
         InlinePicture inlinePicture = createGalaxyInlinePicture();
 
 		final Email email = DefaultEmail.builder()
-				.from(new InternetAddress(this.EmailSender, this.EmailSenderDescription))
-				.to(newArrayList(new InternetAddress(emailTo, ""))).subject(this.NotificationPWChanged).body(body)
+				.from(new InternetAddress(this.emailSender, this.emailSenderDescription))
+				.to(newArrayList(new InternetAddress(emailTo, ""))).subject(this.notificationPWChanged).body(body)
 				.encoding("UTF-8").build();
 
 		String template = "emailTemplate.ftl";
@@ -83,20 +90,24 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
     }
 
 	/**
-	 * Este email es para el aviso al usuario de que se ha registrado un cambio
-	 * de password y que en caso de no haber sido el que se contacte con el
-	 * centro de atencion al cliente
+	 * Se le avisa la usuario mediante un email que contiene una url y un token que clikee para cambia la pw
 	 */
 	@Override
-	public void sendEmailChangePWSuccessfully(String emailTo, String subject, String body)
-			throws UnsupportedEncodingException {
-		final Email email = DefaultEmail.builder()
-				.from(new InternetAddress("testsocialfocus@gmail.com", "Test Social Focus Sender"))
-				.to(newArrayList(new InternetAddress("mariano.dim@gmail.com", "Test Social Focus Reciver")))
-				.subject("You shall die! It's not me, it's Psychohistory").body("Hello Planet!").encoding("UTF-8")
-				.build();
+	public void sendEmailLinkTokenGenerate(String emailTo, String body, String token)
+			throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
-		emailService.send(email);
+		InlinePicture inlinePicture = createGalaxyInlinePicture();
+
+		final Email email = DefaultEmail.builder()
+				.from(new InternetAddress(this.emailSender, this.emailSenderDescription))
+				.to(newArrayList(new InternetAddress(emailTo, ""))).subject(this.notificationPWChanged).body(body)
+				.encoding("UTF-8").build();
+
+		String template = "emailTemplateLinkToken.ftl";
+
+		Map<String, Object> modelObject = ImmutableMap.of("token", token);
+
+		emailService.send(email, template, modelObject, inlinePicture);
 
 	}
 
