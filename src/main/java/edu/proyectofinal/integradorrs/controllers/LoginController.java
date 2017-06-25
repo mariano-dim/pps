@@ -1,5 +1,6 @@
 package edu.proyectofinal.integradorrs.controllers;
 
+import edu.proyectofinal.integradorrs.model.TokenEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import edu.proyectofinal.integradorrs.exceptions.EmptyResultException;
+import edu.proyectofinal.integradorrs.exceptions.InvalidTokenException;
 import edu.proyectofinal.integradorrs.model.Token;
 
 import java.io.UnsupportedEncodingException;
@@ -157,9 +159,10 @@ public class LoginController extends AbstractController<Usuario> {
      
      
 	@RequestMapping(method = RequestMethod.PATCH, 
-			        value = "/email/modify/{email:.+}")
-	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email
-                ,@RequestBody Usuario usuariop
+			        value = "/email/{email:.+}/token/{token}")
+	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email,
+                                                        @Validated @PathVariable("token") String token,
+                                                        @RequestBody Usuario usuariop
         ) 
 		throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
@@ -167,11 +170,18 @@ public class LoginController extends AbstractController<Usuario> {
 		System.out.println("email" + email);
 		
 		/**
-		 * El usuario original es para envarle una notificacion al mismo, antes
+		 * El usuario original es para enviarle una notificacion al mismo, antes
 		 * de que hayan sido modificados los datos
 		 */
 		Usuario usuarioDBOriginal = usuarioService.getByEmail(email);
-		
+
+		// Antes de actualizar los datos del usuario verifico que se trate de un token valido
+        // Es decir que no este expirado y que exista
+        TokenEmail tokenEmail  = usuarioService.getByEmailAndToken(email, token);
+        if (null == tokenEmail) {
+            throw new InvalidTokenException(Usuario.class);
+        }
+
 		Usuario usuario = usuarioService.patch(usuariop, email);
 
 		// En el caso que se requiera pasar algo en el Header
@@ -186,41 +196,56 @@ public class LoginController extends AbstractController<Usuario> {
 			throw new EmptyResultException(Usuario.class);
 		}
 
+		// Elimino el Token, ya que el mismo fue utilizado
+        usuarioService.deleteEmailToken(tokenEmail);
+
+
 		/**
 		 *  Enviando email de prueba En caso de fallar el email se pierde
 		 *  Es importante agregar el nombre y apellido del usuario al codigo
 		 */
-		emailService.sendEmailChangePassword(usuarioDBOriginal.getEmail(),"Cambiaste tu password, en caso de no ser el caso por favor contactanos");
+		emailService.sendEmailChangePassword(usuarioDBOriginal.getEmail(),
+                                             "");
 
-		
 		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);	
 	}
      
 
-	@RequestMapping(method = RequestMethod.PATCH, value = "/email/temp{email:.+}")
-	public ResponseEntity<Usuario> patchUsuarioPWChanged(@Validated @PathVariable("email") String email,
-			@RequestBody Usuario usuariop) throws UnsupportedEncodingException {
+	@RequestMapping(method = RequestMethod.POST, value = "/token/email/{email:.+}")
+	public ResponseEntity<TokenEmail> generateTokenChangePassword(@Validated @PathVariable("email") String email)
+            throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException{
 
-		System.out.println("patchUsuario");
+		System.out.println("generateTokenChangePassword");
 		System.out.println("email" + email);
 
-		Usuario usuario = usuarioService.patch(usuariop, email);
+		Usuario usuario =  usuarioService.getByEmail(email);
 
 		// En el caso que se requiera pasar algo en el Header
 		HttpHeaders headers = new HttpHeaders();
 
-		Usuario usuarioDB = usuarioService.getByEmail(email);
-
-		if (null == usuarioDB) {
+		// Si no se encuentra el usuario a traves de su email
+        // Retorno error para que el front end pueda determinarlo y mostrar el mensaje correspondiente
+        if (null == usuario) {
 			throw new EmptyResultException(Usuario.class);
 		}
+        // Verifico que el usuario no tenga un token vivo, en cuyo caso lo debo desabilitar y generar uno nuevo
+        TokenEmail tokenEmailEnabled  = usuarioService.getByEmailAndExpired(email);
+        if (! (null == tokenEmailEnabled)) {
+            // desabilito el Token anterior, asumo que como mucho existe un solo token habilitado, ya
+            // que cada vez que genero uno nuevo para el mismo usuario, desabilito, si hay uno, en anterior
+            usuarioService.deletePrevToken(tokenEmailEnabled);
+        }
 
-		// Enviandpo email de prueba
-		// En caso de fallar el email se pierde
-		emailService.sendEmailChangePWSuccessfully("", "", "");
+        // Envio email con link + token para el cambio
+        TokenEmail tokenEmail = usuarioService.recoveryPasswordGenerateToken(email);
 
-		return new ResponseEntity<Usuario>(usuarioDB, HttpStatus.OK);
+        // Envio email con el link
+        emailService.sendEmailLinkTokenGenerate(tokenEmail.getTokenEmail(),
+                                                "",
+                                                tokenEmail.getToken());
+
+        return new ResponseEntity<TokenEmail>(tokenEmail, HttpStatus.OK);
 	}
-	
-    
+
+
 }

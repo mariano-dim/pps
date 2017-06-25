@@ -11,8 +11,8 @@ public interface EmailServiceSocialFocus {
 	public void sendEmailChangePassword(String emailTo, String body) 
 			throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException;
 
-	public void sendEmailChangePWSuccessfully(String emailTo, String subject, String body) 
-			throws UnsupportedEncodingException;
+	public void sendEmailLinkTokenGenerate(String emailTo, String body, String token)
+			throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException;
 	
 	
 }
