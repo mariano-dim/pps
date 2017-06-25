@@ -14,7 +14,12 @@
 </p>
 <p>
     Gracias, El equipo de cuentas SocialFocus
-
 </p>
+
+<p style="align:center">
+    <img src="SocialFocus-LogoB.PNG.jpeg" width="100" height="100"/>
+</p>
+
 </body>
 </html>
+
