@@ -158,7 +158,7 @@ public class LoginController extends AbstractController<Usuario> {
      
      
      
-	@RequestMapping(method = RequestMethod.PATCH, 
+	@RequestMapping(method = RequestMethod.POST,
 			        value = "/email/{email:.+}/token/{token}")
 	public ResponseEntity<Usuario> patchUsuarioChangePW(@Validated @PathVariable("email") String email,
                                                         @Validated @PathVariable("token") String token,
