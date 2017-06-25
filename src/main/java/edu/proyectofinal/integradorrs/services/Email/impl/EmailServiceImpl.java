@@ -72,7 +72,7 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
     	ClassLoader classloader = Thread.currentThread().getContextClassLoader();
     	InputStream is  = classloader.getResourceAsStream("images" + File.separator + "galaxy.jpeg");
     	
-        File pictureFile = new File("images" + File.separator + "galaxy.jpeg");	
+        File pictureFile = new File("images" + File.separator + "SocialFocus-LogoB.PNG");
      
         try{
             FileUtils.copyInputStreamToFile(is, pictureFile);
@@ -86,7 +86,7 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
         return DefaultInlinePicture.builder()
                 .file(pictureFile)
                 .imageType(ImageType.PNG)
-                .templateName("SocialFocus-LogoB-PNG").build();
+                .templateName("SocialFocus-LogoB.PNG").build();
     }
 
 	/**
