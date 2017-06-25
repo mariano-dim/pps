@@ -15,39 +15,25 @@ public class Usuario {
     @Indexed(unique = true)
     private String email;
     @Field
+    private String nombre;
+    @Field
     private String clave;
     @Field
     private Date creationDate;
-    @Field
-    private String telefono;
-    @Field
-    private Date fechaNacimiento;
-    @Field
-    private String pais;
-    @Field
-    private String provincia;
-    @Field
-    private String ciudad;
-    @Field
-    private String calle;
+    
+    
 
     public Usuario() {
         super();
     }
 
-    public Usuario(String id, String email, String clave, Date creationDate, String telefono,
-            Date fechaNacimiento, String pais, String provincia, String ciudad, String calle) {
+    public Usuario(String id, String email, String clave, Date creationDate, String nombre) {
         super();
         this.id = id;
         this.email = email;
         this.clave = clave;
         this.creationDate = creationDate;
-        this.telefono = telefono;
-        this.fechaNacimiento = fechaNacimiento;
-        this.pais = pais;
-        this.provincia = provincia;
-        this.ciudad = ciudad;
-        this.calle = calle;
+        this.nombre = nombre;
 
     }
 
@@ -58,12 +44,7 @@ public class Usuario {
         this.email = u.getEmail();
         this.clave = u.getClave();
         this.creationDate = u.getCreationDate();
-        this.telefono = u.getTelefono();
-        this.fechaNacimiento = u.getFechaNacimiento();
-        this.pais = u.getPais();
-        this.provincia = u.getProvincia();
-        this.ciudad = u.getCiudad();
-        this.calle = u.getCalle();
+        this.nombre = u.getNombre();
     }
     
     public String getId() {
@@ -90,52 +71,12 @@ public class Usuario {
         this.creationDate = creationDate;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getClave() {
@@ -157,13 +98,8 @@ public class Usuario {
         str.append(" id:- ").append(this.getId());
         str.append(" email:- ").append(this.getEmail());
         str.append(" creationDate:- ").append(this.getCreationDate());
-        str.append(" telefono:- ").append(this.getTelefono() );
-        str.append(" fechaNacimiento:- ").append( this.getFechaNacimiento());
-        str.append(" pais:- ").append(this.getPais());
-        str.append(" provincia:- ").append(this.getProvincia());
-        str.append(" ciudad:- ").append(this.getCiudad());
-        str.append(" calle:- ").append(this.getCalle());
-
-         return str.toString();
+        str.append(" nombre:- ").append(this.getNombre() );
+       
+        return str.toString();
     }
 }
