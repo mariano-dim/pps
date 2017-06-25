@@ -206,4 +206,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 		tokenEmailRepository.delete(tokenEmail);
 	}
 
+	@Override
+	public boolean isExpirateToken(TokenEmail tokenEmail){
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date()); // Now use today date.
+        // Si HOY es mayor que la fecha de expiracion del token (cuando se genero mas un dia x defecto)
+		// entornce retorno true, para decir que el token no es valido
+		if(calendar.getTime().after(tokenEmail.getTokenExpiration())) return true;
+		else return false;
+
+	}
+
 }

@@ -40,4 +40,6 @@ public interface UsuarioService {
 
 	void deleteEmailToken(TokenEmail tokenEmail);
 
+	boolean isExpirateToken(TokenEmail tokenEmail);
+
 }

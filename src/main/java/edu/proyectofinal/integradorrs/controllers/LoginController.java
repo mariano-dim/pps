@@ -181,6 +181,10 @@ public class LoginController extends AbstractController<Usuario> {
         if (null == tokenEmail) {
             throw new InvalidTokenException(Usuario.class);
         }
+        // Verifico que el token no se encuentre expirado
+        if(usuarioService.isExpirateToken(tokenEmail)){
+            throw new InvalidTokenException(Usuario.class);
+        }
 
 		Usuario usuario = usuarioService.patch(usuariop, email);
 
