@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario save(Usuario usuario) {
-
+           // if (this.findByEmail(usuario.getEmail())){};
 		usuario.setCreationDate(new Date());
 		repository.save(usuario);
 		return usuario;
@@ -113,27 +113,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (!Strings.isNullOrEmpty(usuarioToUpdate.getClave())) {
 			usuario.setClave(usuarioToUpdate.getClave());
 		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getCalle())) {
-			usuario.setCalle(usuarioToUpdate.getCalle());
+		if (!Strings.isNullOrEmpty(usuarioToUpdate.getNombre())) {
+			usuario.setNombre(usuarioToUpdate.getNombre());
 		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getCiudad())) {
-			usuario.setCiudad(usuarioToUpdate.getCiudad());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getPais())) {
-			usuario.setPais(usuarioToUpdate.getPais());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getProvincia())) {
-			usuario.setProvincia(usuarioToUpdate.getProvincia());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getTelefono())) {
-			usuario.setTelefono(usuarioToUpdate.getTelefono());
-		}
-		if (usuarioToUpdate.getFechaNacimiento() != null ) {
-			usuario.setFechaNacimiento(usuarioToUpdate.getFechaNacimiento());
-		}
-		repository.updateUsuario(usuario.getEmail(),usuario.getClave(), usuario.getCalle(), 
-				                      usuario.getCiudad(), usuario.getFechaNacimiento(),
-				                      usuario.getPais(), usuario.getProvincia(), usuario.getTelefono()	);
+		
+		repository.updateUsuario(usuario.getEmail(),usuario.getClave(), usuario.getNombre());
 
 		return usuario;
 	}

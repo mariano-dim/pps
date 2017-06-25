@@ -17,9 +17,7 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public int updateUsuario(String email, String clave, String calle, String cuidad, 
-			                 Date fechaNacimiento, String pais, 
-			                 String provincia, String telefono) {
+	public int updateUsuario(String email, String clave, String nombre) {
 
 		Query query = new Query(Criteria.where("email").is(email));
 		Update update = new Update();
