@@ -17,7 +17,7 @@
 </p>
 
 <p style="align:center">
-    <img src="SocialFocus-LogoB.PNG.jpeg" width="100" height="100"/>
+    <img src="http://socialfocus.com.ar/dist/img/SocialFocus-LogoB.PNG" width="1006" height="291"/>
 </p>
 
 </body>

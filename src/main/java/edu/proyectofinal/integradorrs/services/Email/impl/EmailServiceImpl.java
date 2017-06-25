@@ -64,13 +64,13 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
 
 		Map<String, Object> modelObject = ImmutableMap.of("title", "Emperor", "name", "Cleon I");
 
-		emailService.send(email, template, modelObject,inlinePicture);
+		emailService.send(email, template, modelObject);
 
 	}
 	
     private InlinePicture createGalaxyInlinePicture() throws URISyntaxException {
     	ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    	InputStream is  = classloader.getResourceAsStream("images" + File.separator + "galaxy.jpeg");
+    	InputStream is  = classloader.getResourceAsStream("images" + File.separator + "SocialFocus-LogoB.PNG");
     	
         File pictureFile = new File("images" + File.separator + "SocialFocus-LogoB.PNG");
      
@@ -106,7 +106,7 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
 		String template = "emailTemplateLinkToken.ftl";
 
 		Map<String, Object> modelObject = ImmutableMap.of("token", token, "email", emailTo);
-		emailService.send(email, template, modelObject, inlinePicture);
+		emailService.send(email, template, modelObject);
 
 	}
 
