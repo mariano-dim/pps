@@ -105,8 +105,7 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
 
 		String template = "emailTemplateLinkToken.ftl";
 
-		Map<String, Object> modelObject = ImmutableMap.of("token", token);
-
+		Map<String, Object> modelObject = ImmutableMap.of("token", token, "email", emailTo);
 		emailService.send(email, template, modelObject, inlinePicture);
 
 	}
