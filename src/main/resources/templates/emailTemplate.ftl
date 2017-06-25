@@ -14,7 +14,11 @@ Si no hiciste este cambio, por favor contactate con el centro de cuentas de Soci
 </p>
 <p>
     Gracias, El equipo de cuentas SocialFocus
-
 </p>
+
+<p style="align:center">
+    <img src="SocialFocus-LogoB.PNG.jpeg" width="100" height="100"/>
+</p>
+
 </body>
 </html>

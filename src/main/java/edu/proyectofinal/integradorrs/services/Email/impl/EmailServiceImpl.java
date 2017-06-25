@@ -85,8 +85,8 @@ public class EmailServiceImpl implements EmailServiceSocialFocus {
 
         return DefaultInlinePicture.builder()
                 .file(pictureFile)
-                .imageType(ImageType.JPG)
-                .templateName("galaxy.jpeg").build();
+                .imageType(ImageType.PNG)
+                .templateName("SocialFocus-LogoB-PNG").build();
     }
 
 	/**
