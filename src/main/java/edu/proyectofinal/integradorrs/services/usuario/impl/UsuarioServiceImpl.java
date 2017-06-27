@@ -108,48 +108,28 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return tokenrepository.findAll();
 	}
 
+
+
 	@Override
-	public Usuario patch(Usuario usuarioToUpdate, String email) {
+	public void patch(Usuario usuarioNewData, String email) {
 
-		// Busco el usuario pasandole el email
-		Usuario usuario = getByEmail(email);
-
-		// Conservo los datos del usuario anterior, para imprimir ambos valores
-		// en stdout
-		final Usuario prevUsuario = new Usuario(usuario);
-		
 		/**
-		 * El Id, el email, la fecha de creacion, y la clase no se deben poder modificar
+		 * El Id, la fecha de creacion, y la clase no se deben poder modificar
 		 * 
 		 */
+		/* JSON Example
+		{
+			"_id" : ObjectId("5951931fa312043524f9f58b"),
+				"_class" : "edu.proyectofinal.integradorrs.model.Usuario",
+				"email" : "a@hotmial.com",
+				"nombre" : "a",
+				"clave" : "31a3952e9b1675d9dc36f1f9af1a083b38b7c476",
+				"creationDate" : ISODate("2017-06-26T23:05:03.280Z")
+		}
+        */
 
-		// Splo actualizo los campos que son enviados
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getClave())) {
-			usuario.setClave(usuarioToUpdate.getClave());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getCalle())) {
-			usuario.setCalle(usuarioToUpdate.getCalle());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getCiudad())) {
-			usuario.setCiudad(usuarioToUpdate.getCiudad());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getPais())) {
-			usuario.setPais(usuarioToUpdate.getPais());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getProvincia())) {
-			usuario.setProvincia(usuarioToUpdate.getProvincia());
-		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getTelefono())) {
-			usuario.setTelefono(usuarioToUpdate.getTelefono());
-		}
-		if (usuarioToUpdate.getFechaNacimiento() != null ) {
-			usuario.setFechaNacimiento(usuarioToUpdate.getFechaNacimiento());
-		}
-		repository.updateUsuario(usuario.getEmail(),usuario.getClave(), usuario.getCalle(), 
-				                      usuario.getCiudad(), usuario.getFechaNacimiento(),
-				                      usuario.getPais(), usuario.getProvincia(), usuario.getTelefono()	);
+		repository.updateUsuario(email, usuarioNewData.getEmail(), usuarioNewData.getNombre(), usuarioNewData.getClave());
 
-		return usuario;
 	}
 
 

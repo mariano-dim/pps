@@ -1,5 +1,6 @@
 package edu.proyectofinal.integradorrs.controllers;
 
+import com.google.common.base.Strings;
 import edu.proyectofinal.integradorrs.model.TokenEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -186,7 +187,7 @@ public class LoginController extends AbstractController<Usuario> {
             throw new InvalidTokenException(Usuario.class);
         }
 
-		Usuario usuario = usuarioService.patch(usuariop, email);
+		usuarioService.patch(usuariop, email);
 
 		// En el caso que se requiera pasar algo en el Header
 		HttpHeaders headers = new HttpHeaders();
@@ -223,15 +224,12 @@ public class LoginController extends AbstractController<Usuario> {
 		System.out.println("email" + email);
 
 		Usuario usuario =  usuarioService.getByEmail(email);
-
-		// En el caso que se requiera pasar algo en el Header
-		HttpHeaders headers = new HttpHeaders();
-
 		// Si no se encuentra el usuario a traves de su email
         // Retorno error para que el front end pueda determinarlo y mostrar el mensaje correspondiente
         if (null == usuario) {
 			throw new EmptyResultException(Usuario.class);
 		}
+
         // Verifico que el usuario no tenga un token vivo, en cuyo caso lo debo desabilitar y generar uno nuevo
         TokenEmail tokenEmailEnabled  = usuarioService.getByEmailAndExpired(email);
         if (! (null == tokenEmailEnabled)) {
@@ -243,6 +241,9 @@ public class LoginController extends AbstractController<Usuario> {
         // Envio email con link + token para el cambio
         TokenEmail tokenEmail = usuarioService.recoveryPasswordGenerateToken(email);
 
+        // En el caso que se requiera pasar algo en el Header
+        HttpHeaders headers = new HttpHeaders();
+
         // Envio email con el link
         emailService.sendEmailLinkTokenGenerate(tokenEmail.getTokenEmail(),
                                                 "",
@@ -252,4 +253,51 @@ public class LoginController extends AbstractController<Usuario> {
 	}
 
 
+
+
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/email/{email:.+}")
+    public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
+                                                        @RequestBody Usuario usuarioData )
+            throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
+
+        System.out.println("patchUsuario");
+        System.out.println("email" + email);
+
+        Usuario usuarioToUpdate = usuarioService.getByEmail(email);
+        if (null == usuarioToUpdate) {
+            throw new EmptyResultException(Usuario.class);
+        }
+
+        System.out.println("UsuarioViejo" + usuarioToUpdate.toString());
+
+        usuarioService.patch(usuarioData, email);
+
+        Usuario usuarioNuevo;
+        if(!Strings.isNullOrEmpty(usuarioData.getEmail())){
+
+            usuarioNuevo = usuarioService.getByEmail(usuarioData.getEmail());
+            if (null == usuarioNuevo) {
+                throw new EmptyResultException(Usuario.class);
+            }
+
+        } else{
+            usuarioNuevo = usuarioService.getByEmail(email);
+            if (null == usuarioNuevo) {
+                throw new EmptyResultException(Usuario.class);
+            }
+        }
+
+        System.out.println("UsuarioNuevo" + usuarioNuevo.toString());
+
+        // En el caso que se requiera pasar algo en el Header
+        HttpHeaders headers = new HttpHeaders();
+
+        return new ResponseEntity<Usuario>(usuarioNuevo, HttpStatus.OK);
+    }
+
+
+
 }
+
+

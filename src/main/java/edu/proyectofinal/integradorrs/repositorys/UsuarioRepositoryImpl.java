@@ -2,6 +2,7 @@ package edu.proyectofinal.integradorrs.repositorys;
 
 import java.util.Date;
 
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,20 +18,36 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public int updateUsuario(String email, String clave, String calle, String cuidad, 
-			                 Date fechaNacimiento, String pais, 
-			                 String provincia, String telefono) {
+	public int updateUsuario(String email, String newEmail, String nombre, String clave) {
 
 		Query query = new Query(Criteria.where("email").is(email));
 		Update update = new Update();
-		update.set("clave", clave);
 
-		WriteResult result = mongoTemplate.updateFirst(query, update, Usuario.class);
+		boolean iFlag = false;
 
-		if (result != null)
-			return result.getN();
-		else
-			return 0;
+		if(!Strings.isNullOrEmpty(newEmail)){
+			update.set("email", newEmail) ;
+			iFlag = true;
+		}
+		if(!Strings.isNullOrEmpty(nombre)){
+			update.set("nombre", nombre);
+			iFlag = true;
+		}
+		if(!Strings.isNullOrEmpty(clave)){
+			update.set("clave", clave) ;
+			iFlag = true;
+		}
+
+        if (iFlag){
+			WriteResult result = mongoTemplate.updateFirst(query, update, Usuario.class);
+			if (result != null)
+				return result.getN();
+			else
+				return 0;
+		} else{
+        	return 0;
+		}
+
 
 	}
 
