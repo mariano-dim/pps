@@ -28,7 +28,7 @@ public interface UsuarioService {
 	// Token deleteToken(Token t);
 	Token deleteToken(String email, String rs);
 	
-	Usuario patch(Usuario usuariop, String email);
+	void patch(Usuario usuariop, String email);
 
 	TokenEmail recoveryPasswordGenerateToken(String email);
 

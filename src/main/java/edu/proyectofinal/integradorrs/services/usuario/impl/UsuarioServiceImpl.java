@@ -55,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario save(Usuario usuario) {
-           // if (this.findByEmail(usuario.getEmail())){};
+
 		usuario.setCreationDate(new Date());
 		repository.save(usuario);
 		return usuario;
@@ -108,32 +108,28 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return tokenrepository.findAll();
 	}
 
+
+
 	@Override
-	public Usuario patch(Usuario usuarioToUpdate, String email) {
+	public void patch(Usuario usuarioNewData, String email) {
 
-		// Busco el usuario pasandole el email
-		Usuario usuario = getByEmail(email);
-
-		// Conservo los datos del usuario anterior, para imprimir ambos valores
-		// en stdout
-		final Usuario prevUsuario = new Usuario(usuario);
-		
 		/**
-		 * El Id, el email, la fecha de creacion, y la clase no se deben poder modificar
+		 * El Id, la fecha de creacion, y la clase no se deben poder modificar
 		 * 
 		 */
-
-		// Splo actualizo los campos que son enviados
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getClave())) {
-			usuario.setClave(usuarioToUpdate.getClave());
+		/* JSON Example
+		{
+			"_id" : ObjectId("5951931fa312043524f9f58b"),
+				"_class" : "edu.proyectofinal.integradorrs.model.Usuario",
+				"email" : "a@hotmial.com",
+				"nombre" : "a",
+				"clave" : "31a3952e9b1675d9dc36f1f9af1a083b38b7c476",
+				"creationDate" : ISODate("2017-06-26T23:05:03.280Z")
 		}
-		if (!Strings.isNullOrEmpty(usuarioToUpdate.getNombre())) {
-			usuario.setNombre(usuarioToUpdate.getNombre());
-		}
-		
-		repository.updateUsuario(usuario.getEmail(),usuario.getClave(), usuario.getNombre());
+        */
 
-		return usuario;
+		repository.updateUsuario(email, usuarioNewData.getEmail(), usuarioNewData.getNombre(), usuarioNewData.getClave());
+
 	}
 
 
