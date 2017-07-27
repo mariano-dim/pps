@@ -128,7 +128,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
         */
 
-		repository.updateUsuario(email, usuarioNewData.getEmail(), usuarioNewData.getNombre(), usuarioNewData.getClave());
+		repository.updateUsuario(email, usuarioNewData.getEmail(), usuarioNewData.getNombre(), usuarioNewData.getClave(),usuarioNewData.getPond_likes(), usuarioNewData.getPond_comments(),usuarioNewData.getPond_shares());
 
 	}
 

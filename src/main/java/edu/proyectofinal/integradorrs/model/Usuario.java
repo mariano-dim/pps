@@ -19,6 +19,12 @@ public class Usuario {
     @Field
     private String clave;
     @Field
+    private int pond_likes;
+    @Field
+    private int pond_comments;
+    @Field
+    private int pond_shares;
+    @Field
     private Date creationDate;
     
     
@@ -34,6 +40,9 @@ public class Usuario {
         this.clave = clave;
         this.creationDate = creationDate;
         this.nombre = nombre;
+        this.pond_likes = 1;
+        this.pond_comments = 3;
+        this.pond_shares = 5;
 
     }
 
@@ -45,6 +54,9 @@ public class Usuario {
         this.clave = u.getClave();
         this.creationDate = u.getCreationDate();
         this.nombre = u.getNombre();
+        this.pond_likes = 1;
+        this.pond_comments = 3;
+        this.pond_shares = 5;
     }
     
     public String getId() {
@@ -55,6 +67,31 @@ public class Usuario {
         this.id = id;
     }
 
+    
+    public int getPond_likes() {
+        return pond_likes;
+    }
+
+    public void setPond_likes(int pond_likes) {
+        this.pond_likes = pond_likes;
+    }
+
+    public int getPond_comments() {
+        return pond_comments;
+    }
+
+    public void setPond_comments(int pond_comments) {
+        this.pond_comments = pond_comments;
+    }
+
+    public int getPond_shares() {
+        return pond_shares;
+    }
+
+    public void setPond_shares(int pond_shares) {
+        this.pond_shares = pond_shares;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -99,6 +136,9 @@ public class Usuario {
         str.append(" email:- ").append(this.getEmail());
         str.append(" creationDate:- ").append(this.getCreationDate());
         str.append(" nombre:- ").append(this.getNombre() );
+        str.append(" pond_likes:- ").append(String.valueOf(this.getPond_likes()) );
+        str.append(" pond_comments:- ").append(String.valueOf(this.getPond_comments()) );
+        str.append(" pond_shares:- ").append(String.valueOf(this.getPond_shares()) );
        
         return str.toString();
     }
