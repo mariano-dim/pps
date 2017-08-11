@@ -36,10 +36,11 @@ public interface UpdatesHistoryRepository extends MongoRepository<UpdateHistory,
     /**
      *
      * @param email,id 
+     * @param sort 
      * @return
      */
     @Query("{ 'email' : ?0, 'post': ?1 }")
-    public Collection<UpdateHistory> findByEmailandID(String email, String post);
+    public Collection<UpdateHistory> findByEmailandID(String email, String post,org.springframework.data.domain.Sort sort);
     
     /**
      *

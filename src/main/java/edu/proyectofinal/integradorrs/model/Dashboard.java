@@ -72,7 +72,7 @@ public class Dashboard {
     }
 
     public void setFollowers_t(int followers_t) {
-        this.followers_t = followers_t;
+        this.followers_t = Math.abs(followers_t);
     }
 
     public int getFollowers_f() {
@@ -80,7 +80,7 @@ public class Dashboard {
     }
 
     public void setFollowers_f(int followers_f) {
-        this.followers_f = followers_f;
+        this.followers_f = Math.abs(followers_f);
     }
     
     public Double getZ01_t() {
@@ -88,7 +88,7 @@ public class Dashboard {
     }
 
     public void setZ01_t(Double z01_t) throws ParseException {
-        this.z01_t = z01_t;
+        this.z01_t = Math.abs(z01_t);
     }
 
     public Double getZ02_t() {
@@ -96,7 +96,7 @@ public class Dashboard {
     }
 
     public void setZ02_t(Double z02_t) throws ParseException {
-        this.z02_t = z02_t;
+        this.z02_t = Math.abs(z02_t);
     }
 
     public Double getZ03_t() {
@@ -104,7 +104,7 @@ public class Dashboard {
     }
 
     public void setZ03_t(Double z03_t) throws ParseException {
-        this.z03_t = z03_t;
+        this.z03_t = Math.abs(z03_t);
     }
 
     public Double getZ04_t() {
@@ -112,7 +112,7 @@ public class Dashboard {
     }
 
     public void setZ04_t(Double z04_t) throws ParseException {
-        this.z04_t = z04_t;
+        this.z04_t = Math.abs(z04_t);
     }
 
     public Double getZ05_t() {
@@ -120,7 +120,7 @@ public class Dashboard {
     }
 
     public void setZ05_t(Double z05_t) throws ParseException {
-        this.z05_t = z05_t;
+        this.z05_t = Math.abs(z05_t);
     }
 
     public Double getZ01_f() {
@@ -128,7 +128,7 @@ public class Dashboard {
     }
 
     public void setZ01(Double z01_f) throws ParseException {
-        this.z01_f = z01_f;
+        this.z01_f = Math.abs(z01_f);
     }
 
     public Double getZ02_f() {
@@ -136,7 +136,7 @@ public class Dashboard {
     }
 
     public void setZ02(Double z02_f) throws ParseException {
-        this.z02_f = z02_f;
+        this.z02_f = Math.abs(z02_f);
     }
 
     public Double getZ03_f() {
@@ -144,7 +144,7 @@ public class Dashboard {
     }
 
     public void setZ03(Double z03_f) throws ParseException {
-        this.z03_f = z03_f;
+        this.z03_f = Math.abs(z03_f);
     }
 
     public Double getZ04_f() {
@@ -152,7 +152,7 @@ public class Dashboard {
     }
 
     public void setZ04(Double z04_f) throws ParseException {
-        this.z04_f = z04_f;
+        this.z04_f = Math.abs(z04_f);
     }
 
     public Double getZ05_f() {
@@ -160,7 +160,7 @@ public class Dashboard {
     }
 
     public void setZ05(Double z05_f) throws ParseException {
-        this.z05_f = z05_f;
+        this.z05_f = Math.abs(z05_f);
     }
 
     public void getZ03_f(int i) {
