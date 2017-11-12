@@ -13,14 +13,25 @@ public class Puerta {
     @Id
     private String id;
     @Field
-    private String sector;
+    @Indexed(unique = true)
+    private String publicIdentification;
     @Field
     private boolean isEnabled;
     @Field
     private Date creationDate;
 
+
+
     public Puerta() {
         super();
+    }
+
+    public String getPublicIdentification() {
+        return publicIdentification;
+    }
+
+    public void setPublicIdentification(String publicIdentification) {
+        this.publicIdentification = publicIdentification;
     }
 
     public String getId() {
@@ -29,14 +40,6 @@ public class Puerta {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
     }
 
     public boolean isEnabled() {
@@ -59,7 +62,6 @@ public class Puerta {
     public String toString() {
         return "Puerta{" +
                 "id='" + id + '\'' +
-                ", sector='" + sector + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", creationDate=" + creationDate +
                 '}';

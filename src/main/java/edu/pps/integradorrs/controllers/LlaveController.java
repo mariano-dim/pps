@@ -61,7 +61,14 @@ public class LlaveController extends AbstractController<Llave> {
     }
 
 
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public ResponseEntity<Llave> save(@RequestBody Llave llave) {
 
+        llaveService.save(llave);
+
+        return new ResponseEntity<Llave>(llave, HttpStatus.OK);
+
+    }
 
 
 

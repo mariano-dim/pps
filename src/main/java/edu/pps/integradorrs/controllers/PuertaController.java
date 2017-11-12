@@ -62,6 +62,14 @@ public class PuertaController extends AbstractController<Puerta> {
 
 
 
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public ResponseEntity<Puerta> save(@RequestBody Puerta puerta) {
+
+        puertaService.save(puerta);
+
+        return new ResponseEntity<Puerta>(puerta, HttpStatus.OK);
+
+    }
 
 
 

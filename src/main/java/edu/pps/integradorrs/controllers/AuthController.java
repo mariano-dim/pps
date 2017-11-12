@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 @RequestMapping("/api/usuario")
 public class AuthController extends AbstractController<Usuario> {
-    
+
     @Autowired
     private UsuarioService usuarioService;
 
@@ -48,7 +48,7 @@ public class AuthController extends AbstractController<Usuario> {
     @Autowired
     public EmailServiceSocialFocus emailService;
 
-    @RequestMapping(method = RequestMethod.GET, value="/")
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public ResponseEntity<Collection<Usuario>> getAll() {
 
         System.out.println("getAll");
@@ -74,7 +74,6 @@ public class AuthController extends AbstractController<Usuario> {
         return super.singleResult(usuario);
 
     }
-    
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/id/{id}")
@@ -100,10 +99,9 @@ public class AuthController extends AbstractController<Usuario> {
     }
 
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/email/{email:.+}")
     public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
-                                                        @RequestBody Usuario usuarioData )
+                                                @RequestBody Usuario usuarioData)
             throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
         System.out.println("patchUsuario");
@@ -119,14 +117,14 @@ public class AuthController extends AbstractController<Usuario> {
         usuarioService.patch(usuarioData, email);
 
         Usuario usuarioNuevo;
-        if(!Strings.isNullOrEmpty(usuarioData.getEmail())){
+        if (!Strings.isNullOrEmpty(usuarioData.getEmail())) {
 
             usuarioNuevo = usuarioService.getByEmail(usuarioData.getEmail());
             if (null == usuarioNuevo) {
                 throw new EmptyResultException(Usuario.class);
             }
 
-        } else{
+        } else {
             usuarioNuevo = usuarioService.getByEmail(email);
             if (null == usuarioNuevo) {
                 throw new EmptyResultException(Usuario.class);
@@ -140,6 +138,22 @@ public class AuthController extends AbstractController<Usuario> {
 
         return new ResponseEntity<Usuario>(usuarioNuevo, HttpStatus.OK);
     }
+
+
+    @RequestMapping(method = RequestMethod.GET, value="/hasAccess/usuarioEmail/{usuarioEmail:.+}/puerta/{puerta}/llave/{llave}")
+    public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
+                                                                  @Validated @PathVariable("puerta") String puerta,
+                                                                  @Validated @PathVariable("llave") String llave) {
+
+        System.out.println("getUsuarioHasAccess");
+        System.out.println("UsuarioEmail: " + usuarioEmail);
+        System.out.println("Puerta:       " + puerta);
+        System.out.println("Llave:        " + llave);
+
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
+
+    }
+
 
 
 }

@@ -12,7 +12,7 @@ public interface LlaveService {
 
   //  Usuario getById(String id);
 
-    //Usuario save(Usuario t);
+    Llave save(Llave t);
 
 //    void patch(Usuario usuariop, String email);
 

@@ -12,7 +12,7 @@ public interface PuertaService {
 
   //  Usuario getById(String id);
 
-   // Usuario save(Usuario t);
+      Puerta save(Puerta t);
 
  //   void patch(Usuario usuariop, String email);
 

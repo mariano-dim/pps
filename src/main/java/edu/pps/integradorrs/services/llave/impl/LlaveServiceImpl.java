@@ -28,4 +28,11 @@ public class LlaveServiceImpl implements LlaveService {
 
 
 
+	@Override
+	public Llave save(Llave llave) {
+
+		llave.setCreationDate(new Date());
+		repository.save(llave);
+		return llave;
+	}
 }

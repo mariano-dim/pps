@@ -26,5 +26,11 @@ public class PuertaServiceImpl implements PuertaService {
 		return result;
 	}
 
+	@Override
+	public Puerta save(Puerta puerta) {
 
+		puerta.setCreationDate(new Date());
+		repository.save(puerta);
+		return puerta;
+	}
 }

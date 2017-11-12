@@ -17,6 +17,9 @@ public class Llave {
     @Field
     private Puerta [] puertas;
     @Field
+    @Indexed(unique = true)
+    private String publicIdentification;
+    @Field
     private boolean isEnabled;
     @Field
     private Date creationDate;
@@ -24,6 +27,14 @@ public class Llave {
 
     public Llave() {
         super();
+    }
+
+    public String getPublicIdentification() {
+        return publicIdentification;
+    }
+
+    public void setPublicIdentification(String publicIdentification) {
+        this.publicIdentification = publicIdentification;
     }
 
     public String getId() {
