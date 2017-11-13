@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang3.ArrayUtils;
 
 import edu.pps.integradorrs.model.Usuario;
 import edu.pps.integradorrs.model.Llave;
@@ -30,132 +31,211 @@ import java.util.Collection;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/usuario")
 public class AuthController extends AbstractController<Usuario> {
 
-    @Autowired
-    private UsuarioService usuarioService;
+	@Autowired
+	private UsuarioService usuarioService;
 
-    @Autowired
-    private LlaveService llaveService;
+	@Autowired
+	private LlaveService llaveService;
 
-    @Autowired
-    private PuertaService puertaService;
+	@Autowired
+	private PuertaService puertaService;
 
-    @Autowired
-    public EmailServiceSocialFocus emailService;
+	@Autowired
+	public EmailServiceSocialFocus emailService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
-    public ResponseEntity<Collection<Usuario>> getAll() {
+	@RequestMapping(method = RequestMethod.GET, value = "/")
+	public ResponseEntity<Collection<Usuario>> getAll() {
 
-        System.out.println("getAll");
+		System.out.println("getAll");
 
-        Collection<Usuario> usuarios = usuarioService.getAllUsuarios();
+		Collection<Usuario> usuarios = usuarioService.getAllUsuarios();
 
-        return super.collectionResult(usuarios);
+		return super.collectionResult(usuarios);
 
-    }
+	}
 
-    // fix http://stackoverflow.com/questions/3526523/spring-mvc-pathvariable-getting-truncated
-    @RequestMapping(method = RequestMethod.GET, value = "/email/{email:.+}")
-    public ResponseEntity<Usuario> getByEmail(@Validated @PathVariable("email") String email) {
+	// fix
+	// http://stackoverflow.com/questions/3526523/spring-mvc-pathvariable-getting-truncated
+	@RequestMapping(method = RequestMethod.GET, value = "/email/{email:.+}")
+	public ResponseEntity<Usuario> getByEmail(@Validated @PathVariable("email") String email) {
 
-        System.out.println("getByEmail");
-        System.out.println("Email: " + email);
+		System.out.println("getByEmail");
+		System.out.println("Email: " + email);
 
-        Usuario usuario = usuarioService.getByEmail(email);
+		Usuario usuario = usuarioService.getByEmail(email);
 
-        if (null == usuario) {
-            throw new EmptyResultException(Usuario.class);
-        }
-        return super.singleResult(usuario);
+		if (null == usuario) {
+			throw new EmptyResultException(Usuario.class);
+		}
+		return super.singleResult(usuario);
 
-    }
+	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/id/{id}")
+	public ResponseEntity<Usuario> getById(@Validated @PathVariable("id") String id) {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/id/{id}")
-    public ResponseEntity<Usuario> getById(@Validated @PathVariable("id") String id) {
+		System.out.println("getById");
+		System.out.println("Id: " + id);
 
-        System.out.println("getById");
-        System.out.println("Id: " + id);
+		Usuario usuario = usuarioService.getById(id);
+		if (null == usuario) {
+			throw new EmptyResultException(Usuario.class);
+		}
+		return super.singleResult(usuario);
+	}
 
-        Usuario usuario = usuarioService.getById(id);
-        if (null == usuario) {
-            throw new EmptyResultException(Usuario.class);
-        }
-        return super.singleResult(usuario);
-    }
+	@RequestMapping(method = RequestMethod.POST, value = "/")
+	public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
 
-    @RequestMapping(method = RequestMethod.POST, value = "/")
-    public ResponseEntity<Usuario> save(@RequestBody Usuario usuario) {
+		usuarioService.save(usuario);
 
-        usuarioService.save(usuario);
+		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
 
-        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	}
 
-    }
+	@RequestMapping(method = RequestMethod.POST, value = "/email/{email:.+}")
+	public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
+			@RequestBody Usuario usuarioData)
+			throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
 
+		System.out.println("patchUsuario");
+		System.out.println("email" + email);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/email/{email:.+}")
-    public ResponseEntity<Usuario> patchUsuario(@Validated @PathVariable("email") String email,
-                                                @RequestBody Usuario usuarioData)
-            throws UnsupportedEncodingException, CannotSendEmailException, URISyntaxException {
+		Usuario usuarioToUpdate = usuarioService.getByEmail(email);
+		if (null == usuarioToUpdate) {
+			throw new EmptyResultException(Usuario.class);
+		}
 
-        System.out.println("patchUsuario");
-        System.out.println("email" + email);
+		System.out.println("UsuarioViejo" + usuarioToUpdate.toString());
 
-        Usuario usuarioToUpdate = usuarioService.getByEmail(email);
-        if (null == usuarioToUpdate) {
-            throw new EmptyResultException(Usuario.class);
-        }
+		usuarioService.patch(usuarioData, email);
 
-        System.out.println("UsuarioViejo" + usuarioToUpdate.toString());
+		Usuario usuarioNuevo;
+		if (!Strings.isNullOrEmpty(usuarioData.getEmail())) {
 
-        usuarioService.patch(usuarioData, email);
+			usuarioNuevo = usuarioService.getByEmail(usuarioData.getEmail());
+			if (null == usuarioNuevo) {
+				throw new EmptyResultException(Usuario.class);
+			}
 
-        Usuario usuarioNuevo;
-        if (!Strings.isNullOrEmpty(usuarioData.getEmail())) {
+		} else {
+			usuarioNuevo = usuarioService.getByEmail(email);
+			if (null == usuarioNuevo) {
+				throw new EmptyResultException(Usuario.class);
+			}
+		}
 
-            usuarioNuevo = usuarioService.getByEmail(usuarioData.getEmail());
-            if (null == usuarioNuevo) {
-                throw new EmptyResultException(Usuario.class);
-            }
+		System.out.println("UsuarioNuevo" + usuarioNuevo.toString());
 
-        } else {
-            usuarioNuevo = usuarioService.getByEmail(email);
-            if (null == usuarioNuevo) {
-                throw new EmptyResultException(Usuario.class);
-            }
-        }
+		// En el caso que se requiera pasar algo en el Header
+		HttpHeaders headers = new HttpHeaders();
 
-        System.out.println("UsuarioNuevo" + usuarioNuevo.toString());
+		return new ResponseEntity<Usuario>(usuarioNuevo, HttpStatus.OK);
+	}
 
-        // En el caso que se requiera pasar algo en el Header
-        HttpHeaders headers = new HttpHeaders();
+	@RequestMapping(method = RequestMethod.PATCH, value = "/addkeytouser/usuarioemail/{usuarioEmail:.+}/llavepublicIdentification/{llavepublicIdentification}")
+	public ResponseEntity<Usuario> addKeyToUser(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
+			@Validated @PathVariable("llavepublicIdentification") String llavepublicIdentification) {
 
-        return new ResponseEntity<Usuario>(usuarioNuevo, HttpStatus.OK);
-    }
+		System.out.println("addKeyToUser");
+		System.out.println("usuarioEmail: " + usuarioEmail);
+		System.out.println("llavepublicIdentification: " + llavepublicIdentification);
 
+		// Busco al usuario, en caso de no encontrarlo doy error
+		Usuario usuario = usuarioService.getByEmail(usuarioEmail);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == usuario) {
+			System.out.println("usuario no encontrado");
+			throw new EmptyResultException(Usuario.class);
+		}
 
-    @RequestMapping(method = RequestMethod.GET, value="/hasAccess/usuarioEmail/{usuarioEmail:.+}/puerta/{puerta}/llave/{llave}")
-    public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
-                                                                  @Validated @PathVariable("puerta") String puerta,
-                                                                  @Validated @PathVariable("llave") String llave) {
+		// Busco la llave, a traves de su identificacion publica, en caso de no
+		// encontrarla doy error
+		Llave llave = llaveService.getByPublicIdentification(llavepublicIdentification);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == llave) {
+			System.out.println("llave no encontrada");
+			throw new EmptyResultException(Puerta.class);
+		}
+		// verifico si el usuario ya tiene esa llave asignada, en cuyo caso retorno
+		if (ArrayUtils.contains(usuario.getLlaves(), llavepublicIdentification)) {
+			System.out.println("el usuario ya posee esa llave");
+			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+		}
 
-        System.out.println("getUsuarioHasAccess");
-        System.out.println("UsuarioEmail: " + usuarioEmail);
-        System.out.println("Puerta:       " + puerta);
-        System.out.println("Llave:        " + llave);
+		// Le agrego la llave al usuario
+		usuarioService.addLlave(usuarioEmail, llavepublicIdentification);
 
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+		// Busco al usuario, para retornar la informacion que se persistio en la db
+		Usuario usuarioUpdated = usuarioService.getByEmail(usuarioEmail);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == usuarioUpdated) {
+			throw new EmptyResultException(Usuario.class);
+		}
+		return new ResponseEntity<Usuario>(usuarioUpdated, HttpStatus.OK);
 
-    }
+	}
 
+	@RequestMapping(method = RequestMethod.PATCH, value = "/removekeytouser/usuarioemail/{usuarioEmail:.+}/llavepublicIdentification/{llavepublicIdentification}")
+	public ResponseEntity<Usuario> removeKeyToUser(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
+			@Validated @PathVariable("llavepublicIdentification") String llavepublicIdentification) {
 
+		System.out.println("removeKeyToUser");
+		System.out.println("usuarioEmail: " + usuarioEmail);
+		System.out.println("llavepublicIdentification: " + llavepublicIdentification);
+
+		// Busco al usuario, en caso de no encontrarlo doy error
+		Usuario usuario = usuarioService.getByEmail(usuarioEmail);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == usuario) {
+			System.out.println("usuario no encontrado");
+			throw new EmptyResultException(Usuario.class);
+		}
+
+		// Busco la llave, a traves de su identificacion publica, en caso de no
+		// encontrarla doy error
+		Llave llave = llaveService.getByPublicIdentification(llavepublicIdentification);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == llave) {
+			System.out.println("llave no encontrada");
+			throw new EmptyResultException(Puerta.class);
+		}
+
+		// verifico si el usuario tiene esa llave asignada, en cuyo caso retorno
+		if (!ArrayUtils.contains(usuario.getLlaves(), llavepublicIdentification)) {
+			System.out.println("el usuario no posee esa llave");
+			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+		}
+
+		// Le borro la llave al usuario
+		usuarioService.removeLlave(usuarioEmail, llavepublicIdentification);
+
+		// Busco al usuario, para retornar la informacion que se persistio en la db
+		Usuario usuarioUpdated = usuarioService.getByEmail(usuarioEmail);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == usuarioUpdated) {
+			throw new EmptyResultException(Usuario.class);
+		}
+		return new ResponseEntity<Usuario>(usuarioUpdated, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/hasAccess/usuarioEmail/{usuarioEmail:.+}/puerta/{puerta}/llave/{llave}")
+	public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
+			@Validated @PathVariable("puerta") String puerta, @Validated @PathVariable("llave") String llave) {
+
+		System.out.println("getUsuarioHasAccess");
+		System.out.println("UsuarioEmail: " + usuarioEmail);
+		System.out.println("Puerta:       " + puerta);
+		System.out.println("Llave:        " + llave);
+
+		return new ResponseEntity<String>("OK", HttpStatus.OK);
+
+	}
 
 }
-
-

@@ -18,7 +18,7 @@ public class Usuario {
     @Field
     private String nombre;
     @Field
-    private Llave[] llaves;
+    private String[] llaves;
     @Field
     private Date creationDate;
 
@@ -28,23 +28,7 @@ public class Usuario {
         super();
     }
 
-    public Usuario(String id, String email, String nombre, Date creationDate) {
-        super();
-        this.id = id;
-        this.email = email;
-        this.creationDate = creationDate;
-        this.nombre = nombre;
-    }
 
-    
-    public Usuario(Usuario u) {
-        super();
-        this.id = u.getId();
-        this.email = u.getEmail();
-        this.nombre = u.getNombre();
-        this.creationDate = u.getCreationDate();
-    }
-    
     public String getId() {
         return id;
     }
@@ -77,11 +61,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public Llave[] getLlaves() {
+    public String[] getLlaves() {
         return llaves;
     }
 
-    public void setLlaves(Llave[] llaves) {
+    public void setLlaves(String[] llaves) {
         this.llaves = llaves;
     }
 

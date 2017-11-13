@@ -16,4 +16,8 @@ public interface UsuarioService {
 
 	void patch(Usuario usuariop, String email);
 
+	void addLlave(String usuarioEmail, String llavepublicIdentification);
+
+	void removeLlave(String usuarioEmail, String llavepublicIdentification);
+
 }

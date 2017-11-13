@@ -11,10 +11,10 @@ public interface PuertaRepository extends MongoRepository<Puerta, String>, Puert
 
     /**
      *
-     * @param email
+     * @param publicIdentification
      * @return
      */
-    //@Query("{ 'email' : ?0}")
-    //public Usuario findByEmail(String email);
+    @Query("{ 'publicIdentification' : ?0}")
+    public Puerta findByPublicIdentification(String publicIdentification);
 
 }

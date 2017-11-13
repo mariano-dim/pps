@@ -60,6 +60,19 @@ public class PuertaController extends AbstractController<Puerta> {
 
     }
 
+    @RequestMapping(method = RequestMethod.GET, value="/publicIdentification/{publicIdentification}")
+    public ResponseEntity<Puerta> getByPublicIdentification(@Validated @PathVariable("publicIdentification") String publicIdentification) {
+
+        System.out.println("getByPublicIdentification");
+        System.out.println("publicIdentification: " + publicIdentification);
+
+        Puerta puerta = puertaService.getByPublicIdentification(publicIdentification);
+
+        if (null == puerta) {
+            throw new EmptyResultException(Puerta.class);
+        }
+        return super.singleResult(puerta);
+    }
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/")

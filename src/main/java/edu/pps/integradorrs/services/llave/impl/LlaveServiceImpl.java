@@ -35,4 +35,26 @@ public class LlaveServiceImpl implements LlaveService {
 		repository.save(llave);
 		return llave;
 	}
+
+	@Override
+	public Llave getByPublicIdentification(String publicIdentification){
+		return repository.findByPublicIdentification(publicIdentification);
+	}
+
+	
+	@Override
+	public void addPuerta(String llavepublicIdentification, String puertapublicIdentification) {
+
+		repository.addPuerta(llavepublicIdentification, puertapublicIdentification);
+
+	}
+
+
+	@Override
+	public void removePuerta(String llavepublicIdentification, String puertapublicIdentification) {
+
+		repository.removePuerta(llavepublicIdentification, puertapublicIdentification);
+
+	}
+
 }

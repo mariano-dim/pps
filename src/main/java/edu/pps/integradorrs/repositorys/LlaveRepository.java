@@ -11,10 +11,10 @@ public interface LlaveRepository extends MongoRepository<Llave, String>, LlaveRe
 
     /**
      *
-     * @param email
+     * @param publicIdentification
      * @return
      */
-    //@Query("{ 'email' : ?0}")
-    //public Usuario findByEmail(String email);
+    @Query("{ 'publicIdentification' : ?0}")
+    public Llave findByPublicIdentification(String publicIdentification);
 
 }

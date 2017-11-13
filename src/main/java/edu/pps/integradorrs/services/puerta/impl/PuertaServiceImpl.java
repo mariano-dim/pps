@@ -33,4 +33,11 @@ public class PuertaServiceImpl implements PuertaService {
 		repository.save(puerta);
 		return puerta;
 	}
+
+	@Override
+	public Puerta getByPublicIdentification(String publicIdentification){
+       return repository.findByPublicIdentification(publicIdentification);
+	}
+
+
 }

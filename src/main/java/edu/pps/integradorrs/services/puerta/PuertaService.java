@@ -10,7 +10,7 @@ public interface PuertaService {
 
 //    Usuario getByEmail(String email);
 
-  //  Usuario getById(String id);
+      Puerta getByPublicIdentification(String publicIdentification);
 
       Puerta save(Puerta t);
 

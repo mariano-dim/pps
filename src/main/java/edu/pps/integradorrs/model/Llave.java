@@ -15,7 +15,7 @@ public class Llave {
     @Id
     private String id;
     @Field
-    private Puerta [] puertas;
+    private String [] puertas;
     @Field
     @Indexed(unique = true)
     private String publicIdentification;
@@ -45,11 +45,11 @@ public class Llave {
         this.id = id;
     }
 
-    public Puerta[] getPuertas() {
+    public String[] getPuertas() {
         return puertas;
     }
 
-    public void setPuertas(Puerta[] puertas) {
+    public void setPuertas(String[] puertas) {
         this.puertas = puertas;
     }
 

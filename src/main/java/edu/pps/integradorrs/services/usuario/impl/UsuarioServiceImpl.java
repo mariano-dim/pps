@@ -50,25 +50,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public void patch(Usuario usuarioNewData, String email) {
 
-		/**
-		 * El Id, la fecha de creacion, y la clase no se deben poder modificar
-		 * 
-		 */
-		/* JSON Example
-		{
-			"_id" : ObjectId("5951931fa312043524f9f58b"),
-				"_class" : "Llave",
-				"email" : "a@hotmial.com",
-				"nombre" : "a",
-				"clave" : "31a3952e9b1675d9dc36f1f9af1a083b38b7c476",
-				"creationDate" : ISODate("2017-06-26T23:05:03.280Z")
-		}
-        */
-
 		repository.updateUsuario(email, usuarioNewData.getEmail(), usuarioNewData.getNombre());
 
 	}
 
 
+
+
+	@Override
+	public void addLlave(String usuarioEmail, String llavepublicIdentification) {
+
+		repository.addLlave(usuarioEmail, llavepublicIdentification);
+
+	}
+
+
+	@Override
+	public void removeLlave(String usuarioEmail, String llavepublicIdentification) {
+
+		repository.removeLlave(usuarioEmail, llavepublicIdentification);
+
+	}
 
 }
