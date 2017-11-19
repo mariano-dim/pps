@@ -63,6 +63,22 @@ public class LlaveController extends AbstractController<Llave> {
 	@RequestMapping(method = RequestMethod.POST, value = "/")
 	public ResponseEntity<Llave> save(@RequestBody Llave llave) {
 
+		System.out.println("save llave");
+        // Verifico si la nueva llave posee puertas asignadas
+		if (null == llave.getPuertas()){
+			System.out.println("Registrando nueva llave sin puertas asociadas");
+		}else {
+			// Verifico que la/las puertas asociadas existan, sino doy error
+			// Busco la Puerta, a traves de su identificacion publica, en caso de no
+			// encontrarla doy error
+			for(String puerta: llave.getPuertas()) {
+				// TODO: retornar la excepcion correcta BusinessException
+				if (null == puertaService.getByPublicIdentification(puerta)) {
+					System.out.println("Puerta no encontrada");
+					throw new EmptyResultException(Puerta.class);				}			
+			}
+		}
+				
 		llaveService.save(llave);
 
 		return new ResponseEntity<Llave>(llave, HttpStatus.OK);

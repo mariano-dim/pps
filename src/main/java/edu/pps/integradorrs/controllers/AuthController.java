@@ -181,7 +181,7 @@ public class AuthController extends AbstractController<Usuario> {
 
 	}
 
-	@RequestMapping(method = RequestMethod.PATCH, value = "/removekeytouser/usuarioemail/{usuarioEmail:.+}/llavepublicIdentification/{llavepublicIdentification}")
+	@RequestMapping(method = RequestMethod.PATCH, value = "/removekeytouser/usuarioemail/{usuarioEmail:.+}/llavepublicidentification/{llavepublicidentification}")
 	public ResponseEntity<Usuario> removeKeyToUser(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
 			@Validated @PathVariable("llavepublicIdentification") String llavepublicIdentification) {
 
@@ -225,14 +225,52 @@ public class AuthController extends AbstractController<Usuario> {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/hasAccess/usuarioEmail/{usuarioEmail:.+}/puerta/{puerta}/llave/{llave}")
-	public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioEmail") String usuarioEmail,
-			@Validated @PathVariable("puerta") String puerta, @Validated @PathVariable("llave") String llave) {
+	@RequestMapping(method = RequestMethod.GET, value = "/hasaccess/usuarioemail/{usuarioemail:.+}/puertapublicidentification/{puertapublicidentification}/llavepublicidentification/{llavepublicidentification}")
+	public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioemail") String usuarioEmail,
+			@Validated @PathVariable("puertapublicidentification") String puertaPublicIdentification, 
+			@Validated @PathVariable("llavepublicidentification") String llavePublicIdentification) {
 
 		System.out.println("getUsuarioHasAccess");
-		System.out.println("UsuarioEmail: " + usuarioEmail);
-		System.out.println("Puerta:       " + puerta);
-		System.out.println("Llave:        " + llave);
+		System.out.println("usuarioemail: " + usuarioEmail);
+		System.out.println("llavepublicidentification:       " + llavePublicIdentification);
+		System.out.println("puertapublicidentification:      " + puertaPublicIdentification);
+		
+		
+		// Busco al usuario, en caso de no encontrarlo retorno error
+		Usuario usuario = usuarioService.getByEmail(usuarioEmail);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == usuario) {
+			System.out.println("Usuario no encontrado");
+			return new ResponseEntity<String>("ERROR", HttpStatus.OK);
+		}
+		
+		// Busco la llave, a traves de su identificacion publica, en caso de no
+		// encontrarla retorno error
+		Llave llave = llaveService.getByPublicIdentification(llavePublicIdentification);
+		// TODO: retornar la excepcion correcta BusinessException
+		if (null == llave) {
+			System.out.println("Llave no encontrada");
+			return new ResponseEntity<String>("ERROR", HttpStatus.OK);
+		}
+		
+		// Busco la puerta, a traves de su identificacion publica, en caso de no
+		// encontrarla retorno error
+        Puerta puerta = puertaService.getByPublicIdentification(puertaPublicIdentification);
+        if (null == puerta) {
+			System.out.println("Puerta no encontrada");
+        	return new ResponseEntity<String>("ERROR", HttpStatus.OK);
+        }
+		// Verifico si el usuario tiene esa llave asignada, en cuyo caso retorno error
+		if (!ArrayUtils.contains(usuario.getLlaves(), llavePublicIdentification)) {
+			System.out.println("El usuario no posee esa llave");
+			return new ResponseEntity<String>("ERROR", HttpStatus.OK);
+		}        
+		// Verifico si la llave  tiene esa puerta asignada, en cuyo caso retorno error
+		if (!ArrayUtils.contains(llave.getPuertas(), puertaPublicIdentification)) {
+			System.out.println("La llave indicada no posee esa puerta");
+			return new ResponseEntity<String>("ERROR", HttpStatus.OK);
+		}        
+
 
 		return new ResponseEntity<String>("OK", HttpStatus.OK);
 

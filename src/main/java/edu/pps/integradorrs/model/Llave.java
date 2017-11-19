@@ -17,7 +17,6 @@ public class Llave {
     @Field
     private String [] puertas;
     @Field
-    @Indexed(unique = true)
     private String publicIdentification;
     @Field
     private boolean isEnabled;

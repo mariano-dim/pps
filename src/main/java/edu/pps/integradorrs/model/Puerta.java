@@ -13,7 +13,6 @@ public class Puerta {
     @Id
     private String id;
     @Field
-    @Indexed(unique = true)
     private String publicIdentification;
     @Field
     private boolean isEnabled;
