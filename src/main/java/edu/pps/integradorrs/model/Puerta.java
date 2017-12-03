@@ -57,10 +57,12 @@ public class Puerta {
         this.creationDate = creationDate;
     }
 
+
     @Override
     public String toString() {
         return "Puerta{" +
                 "id='" + id + '\'' +
+                ", publicIdentification='" + publicIdentification + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", creationDate=" + creationDate +
                 '}';

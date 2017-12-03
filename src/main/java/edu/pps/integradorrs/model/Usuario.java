@@ -21,8 +21,16 @@ public class Usuario {
     private String[] llaves;
     @Field
     private Date creationDate;
+    @Field
+    private String isBlocked;
 
-    
+    public String getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(String isBlocked) {
+        this.isBlocked = isBlocked;
+    }
 
     public Usuario() {
         super();
@@ -68,6 +76,7 @@ public class Usuario {
     public void setLlaves(String[] llaves) {
         this.llaves = llaves;
     }
+
 
     @Override
     public String toString() {

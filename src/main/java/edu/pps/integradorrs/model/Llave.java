@@ -22,6 +22,8 @@ public class Llave {
     private boolean isEnabled;
     @Field
     private Date creationDate;
+    @Field
+    private String usuario;
 
 
     public Llave() {
@@ -68,13 +70,23 @@ public class Llave {
         this.creationDate = creationDate;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public String toString() {
         return "Llave{" +
                 "id='" + id + '\'' +
                 ", puertas=" + Arrays.toString(puertas) +
+                ", publicIdentification='" + publicIdentification + '\'' +
                 ", isEnabled=" + isEnabled +
                 ", creationDate=" + creationDate +
+                ", usuario='" + usuario + '\'' +
                 '}';
     }
 }
