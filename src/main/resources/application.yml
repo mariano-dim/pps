@@ -32,14 +32,11 @@ spring.mail.properties.mail.smtp.starttls.required: false
 
 spring.mail.host: 10.150.1.19
 spring.mail.port: 25
-spring.mail.username: notifier@socialfocus.com.ar
+spring.mail.username: notifier@pps.com.ar
 spring.mail.password:
 
-emailCustom.emailSender: "notifier@socialfocus.com.ar"
-emailCustom.emailSenderDescription: "Equipo de cuentas SocialFocus"
-emailCustom.notificationTitle: "Confirmación de seguridad de la cuenta SocialFocus"
+emailCustom.emailSender: "notifier@pps.com.ar"
+emailCustom.emailSenderDescription: "Equipo de cuentas pps"
+emailCustom.notificationTitle: "Confirmación de seguridad de la cuenta pps"
 
 token.expiration: 1
-
-
-  

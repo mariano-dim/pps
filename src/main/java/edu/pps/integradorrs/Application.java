@@ -1,7 +1,6 @@
 package edu.pps.integradorrs;
 
 
-
 import org.springframework.beans.BeansException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,21 +15,23 @@ import it.ozimov.springboot.mail.configuration.EnableEmailTools;
 @SpringBootApplication
 @EnableEmailTools
 @RestController
-public class Application implements ApplicationContextAware{
-	
-	private ApplicationContext applicationContext;
-	
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+public class Application implements ApplicationContextAware {
 
-	@RequestMapping("/echo")
-	public String echo(@RequestParam String comm) {
-		return "ping";
-	}
+    private ApplicationContext applicationContext;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;		
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    @RequestMapping("/echo")
+    public String echo(@RequestParam String comm) {
+        return "ping";
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+
 }

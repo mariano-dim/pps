@@ -3,5 +3,8 @@ package edu.pps.integradorrs.services.log;
 public interface LogService {
 
 
-    void save(String s);
+    void send(String codigoMensaje,String message);
+
+    void save(String mensaje);
 }
+

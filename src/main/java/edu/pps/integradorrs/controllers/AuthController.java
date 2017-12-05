@@ -26,9 +26,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import edu.pps.integradorrs.exceptions.EmptyResultException;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Random;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +51,7 @@ public class AuthController extends AbstractController<Usuario> {
 
     @Autowired
     public EmailServiceSocialFocus emailService;
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ResponseEntity<Collection<Usuario>> getAll() {
@@ -214,6 +214,19 @@ public class AuthController extends AbstractController<Usuario> {
         System.out.println("llavepublicidentification:       " + llavePublicIdentification);
         System.out.println("puertapublicidentification:      " + puertaPublicIdentification);
 
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int)
+                    (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+        String generatedString = buffer.toString();
+        logService.send(generatedString, "CheckAccess: Llave: " + llavePublicIdentification +  " Puerta: " + puertaPublicIdentification );
+
 
         // Busco la llave, a traves de su identificacion publica, en caso de no
         // encontrarla retorno error
@@ -222,6 +235,7 @@ public class AuthController extends AbstractController<Usuario> {
         // TODO: retornar la excepcion correcta BusinessException
         if (null == llave) {
             System.out.println("Llave no encontrada");
+            logService.send(generatedString, "Llave no encontrada" );
             return new ResponseEntity<String>("ERROR", HttpStatus.OK);
         }
 
@@ -231,6 +245,7 @@ public class AuthController extends AbstractController<Usuario> {
         Puerta puerta = puertaService.getByPublicIdentification(puertaPublicIdentification);
         if (null == puerta) {
             System.out.println("Puerta inexistente");
+            logService.send(generatedString, "Puerta inexistente");
             return new ResponseEntity<String>("ERROR", HttpStatus.OK);
         }
         // Busco el usuario a traves de la llave, ya que una llave solo puede tener un usuario asociado
@@ -242,6 +257,7 @@ public class AuthController extends AbstractController<Usuario> {
         // TODO: retornar la excepcion correcta BusinessException
         if (null == usuario) {
             System.out.println("Usuario no encontrado");
+            logService.send(generatedString, "El usuario asociado a la llave es no fue encontrado" );
             return new ResponseEntity<String>("ERROR", HttpStatus.OK);
         }
 
@@ -249,19 +265,26 @@ public class AuthController extends AbstractController<Usuario> {
         System.out.println("Verificando si el usuario tiene asociada la puerta");
         if (!ArrayUtils.contains(usuario.getLlaves(), llavePublicIdentification)) {
             System.out.println("El usuario no tiene asignada esa llave");
+            logService.send(generatedString, "El usuario no tiene asignada esa llave, posible inconsistencia de datos" );
             return new ResponseEntity<String>("ERROR", HttpStatus.OK);
         }
         // Verifico si la llave  tiene esa puerta asignada, en cuyo caso retorno error
         System.out.println("Verificando si el Llave tiene asociada la Puerta");
         if (!ArrayUtils.contains(llave.getPuertas(), puertaPublicIdentification)) {
             System.out.println("La llave indicada no posee esa puerta");
+            logService.send(generatedString, "La llave indicada no posee esa puerta" );
             return new ResponseEntity<String>("ERROR", HttpStatus.OK);
         }
-
+        logService.send(generatedString, "Asignando acceso al usuario: " + usuario.getEmail() + " LLave: " + llave.getPublicIdentification() + " Puerta: " + puerta.getPublicIdentification() );
 
         return new ResponseEntity<String>("OK#" + llave.getUsuario(), HttpStatus.OK);
 
     }
+
+
+
+
+
 
     //@RequestMapping(method = RequestMethod.GET, value = "/hasaccess/usuarioemail/{usuarioemail:.+}/puertapublicidentification/{puertapublicidentification}/llavepublicidentification/{llavepublicidentification}")
     //public ResponseEntity<String> getUsuarioHasAccess(@Validated @PathVariable("usuarioemail") String usuarioEmail,
